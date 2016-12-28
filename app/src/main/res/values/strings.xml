@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">烂笔头</string>
+
+    <string name="navigation_drawer_open">打开导航抽屉</string>
+    <string name="navigation_drawer_close">关闭导航抽屉</string>
+
+    <string name="action_settings">设置</string>
+
+    <!-- Activity Title -->
+    <string name="title_activity_pattern_init">设置图案密码</string>
+    <string name="title_activity_password_edit_mode">选择编辑模式</string>
+
+    <!-- TextView -->
+    <string name="tv_pattern_init_tips">绘制解锁图案</string>
+    <string name="tv_pattern_init_again">再次绘制解锁图案</string>
+
+    <!-- Button -->
+    <string name="btn_pattern_init_continue">继续</string>
+    <string name="btn_pattern_init_reset">清除</string>
+    <string name="btn_pattern_init_ensure">确认</string>
+
+    <!--Menu Action-->
+    <string name="action_menu_skip">SKIP</string>
+
+    <!--ErrorMsg-->
+    <string name="error_pattern_create_empty">密码不能为空</string>
+    <string name="error_pattern_create_exists">主密码已经设置，无需重复添加</string>
+
+    <!--Label-->
+    <string name="label_fab_password">密码</string>
+    <string name="label_fab_note">笔记</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Array-->
+    <string-array name="tab_main">
+        <item>密码</item>
+    </string-array>
+    <string-array name="mode_password">
+        <item>网站</item>
+        <item>银行卡</item>
+        <item>服务器</item>
+    </string-array>
+
+</resources>

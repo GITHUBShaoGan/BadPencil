@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF34A350</color>
+    <color name="colorPrimaryDark">#dd34A350</color>
+    <color name="colorAccent">#FFC93437</color>
+
+    <color name="colorAssistGrey">#999999</color>
+    <color name="colorButtonGrey">#e2e2e2</color>
+    <color name="colorDividerNormal">#dddddd</color>
+    <color name="colorDividerSpecific">#cccccc</color>
+    <color name="colorPrimaryBlack">#333333</color>
+    <color name="colorCanvas">#f4f4f4</color>
+    <color name="colorPrimaryRed">#ff2121</color>
+    <color name="colorPrimaryGreen">#1dc988</color>
+    <color name="colorPrimaryPurple">#b172cf</color>
+    <color name="colorPrimaryYellow">#ffc800</color>
+    <color name="colorPrimaryOrange">#fa952f</color>
+    <color name="colorMainTabNormal">#909090</color>
+    <color name="colorMineBg">#18b4ed</color>
+    <color name="colorLoginPressed">#46c3f1</color>
+    <color name="colorAssistMiddleGrey">#666666</color>
+
+    <color name="colorGoogleRed">#FFC93437</color>
+    <color name="colorGoogleBlue">#FF375BF1</color>
+    <color name="colorGoogleYellow">#FFF7D23E</color>
+    <color name="colorGoogleGreen">#FF34A350</color>
+
+</resources>
