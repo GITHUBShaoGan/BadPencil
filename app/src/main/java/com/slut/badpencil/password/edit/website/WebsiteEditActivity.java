@@ -1,4 +1,4 @@
-package com.slut.badpencil.password.edit.original;
+package com.slut.badpencil.password.edit.website;
 
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +14,15 @@ import android.widget.EditText;
 import com.slut.badpencil.R;
 import com.slut.badpencil.utils.ResUtils;
 
+import org.apmem.tools.layouts.FlowLayout;
+import org.w3c.dom.Text;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PassEditActivity extends AppCompatActivity {
+import static android.R.id.edit;
+
+public class WebsiteEditActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -33,13 +38,17 @@ public class PassEditActivity extends AppCompatActivity {
     AutoCompleteTextView account;
     @BindView(R.id.password)
     EditText password;
+    @BindView(R.id.url)
+    EditText url;
     @BindView(R.id.remark)
     EditText remark;
+    @BindView(R.id.flowLayout)
+    FlowLayout flowLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pass_edit);
+        setContentView(R.layout.activity_website_edit);
         ButterKnife.bind(this);
         initView();
         initListener();
@@ -70,10 +79,10 @@ public class PassEditActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(TextUtils.isEmpty(editable.toString().trim())){
-                    tilTitle.setError(ResUtils.getString(R.string.error_title_cannot_empty));
-                }else{
+                if (!TextUtils.isEmpty(editable.toString().trim())) {
                     tilTitle.setError("");
+                } else {
+                    tilTitle.setError(ResUtils.getString(R.string.error_title_cannot_empty));
                 }
             }
         });
@@ -91,16 +100,16 @@ public class PassEditActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String t = title.getText().toString().trim();
-                if(TextUtils.isEmpty(t)){
+                if (TextUtils.isEmpty(t)) {
                     tilTitle.setError(ResUtils.getString(R.string.error_title_cannot_empty));
-                }else{
+                } else {
                     tilTitle.setError("");
                 }
 
-                if(TextUtils.isEmpty(editable.toString().trim())){
-                    tilAccount.setError(ResUtils.getString(R.string.error_account_cannot_empty));
-                }else{
+                if (!TextUtils.isEmpty(editable.toString().trim())) {
                     tilAccount.setError("");
+                } else {
+                    tilAccount.setError(ResUtils.getString(R.string.error_account_cannot_empty));
                 }
             }
         });
@@ -119,27 +128,24 @@ public class PassEditActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String t = title.getText().toString().trim();
                 String a = account.getText().toString().trim();
-
-                if(TextUtils.isEmpty(t)){
+                if (TextUtils.isEmpty(t)) {
                     tilTitle.setError(ResUtils.getString(R.string.error_title_cannot_empty));
-                }else{
+                } else {
                     tilTitle.setError("");
                 }
 
-                if(TextUtils.isEmpty(a)){
+                if (TextUtils.isEmpty(a)) {
                     tilAccount.setError(ResUtils.getString(R.string.error_account_cannot_empty));
-                }else{
+                } else {
                     tilAccount.setError("");
                 }
 
-
-                if(TextUtils.isEmpty(editable.toString().trim())){
-                    tilPassword.setError(ResUtils.getString(R.string.error_password_cannot_empty));
-                }else{
+                if (!TextUtils.isEmpty(editable.toString().trim())) {
                     tilPassword.setError("");
+                } else {
+                    tilPassword.setError(ResUtils.getString(R.string.error_password_cannot_empty));
                 }
             }
         });
     }
-
 }

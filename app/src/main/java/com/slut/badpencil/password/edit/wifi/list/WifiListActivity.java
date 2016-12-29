@@ -1,6 +1,10 @@
-package com.slut.badpencil.password.edit.mode;
+package com.slut.badpencil.password.edit.wifi.list;
 
 import android.content.Intent;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,17 +15,14 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.slut.badpencil.R;
-import com.slut.badpencil.password.edit.original.PassEditActivity;
-import com.slut.badpencil.password.edit.server.ServerEditActivity;
-import com.slut.badpencil.password.edit.website.WebsiteEditActivity;
 import com.slut.badpencil.password.edit.wifi.WifiEditActivity;
-import com.slut.badpencil.password.edit.wifi.list.WifiListActivity;
-import com.slut.badpencil.utils.ResUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EditModeActivity extends AppCompatActivity implements EditModeAdapter.OnItemClickListener {
+public class WifiListActivity extends AppCompatActivity implements WifiListAdapter.OnItemClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -29,12 +30,13 @@ public class EditModeActivity extends AppCompatActivity implements EditModeAdapt
     RecyclerView recyclerView;
 
     private LinearLayoutManager layoutManager;
-    private EditModeAdapter adapter;
+    private WifiManager wifiManager;
+    private WifiListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_mode);
+        setContentView(R.layout.activity_wifi_list);
         ButterKnife.bind(this);
         initView();
         initListener();
@@ -46,13 +48,35 @@ public class EditModeActivity extends AppCompatActivity implements EditModeAdapt
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
-        String[] titleArr = ResUtils.getStringArray(R.array.mode_password);
-        int[] iconArr = {R.drawable.ic_website_blue_48, R.drawable.ic_bank_golden_48, R.drawable.ic_server_black_48,R.drawable.ic_wifi_green_24};
-        adapter = new EditModeAdapter(titleArr, iconArr);
+        wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+        adapter = new WifiListAdapter(wifiManager);
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    updateHandler.sendEmptyMessage(0x1234);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
+
+    private Handler updateHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            List<ScanResult> scanResults = wifiManager.getScanResults();
+            adapter.setScanResultList(scanResults);
+            adapter.notifyDataSetChanged();
+        }
+    };
 
     private void initListener() {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -65,15 +89,16 @@ public class EditModeActivity extends AppCompatActivity implements EditModeAdapt
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.password_edit_mode, menu);
+        getMenuInflater().inflate(R.menu.wifi_list, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId()){
             case R.id.skip:
-                startActivity(new Intent(this, PassEditActivity.class));
+                Intent intent = new Intent(this, WifiEditActivity.class);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -81,15 +106,8 @@ public class EditModeActivity extends AppCompatActivity implements EditModeAdapt
 
     @Override
     public void onItemClick(View view, int position) {
-        switch (position) {
-            case 0:
-                startActivity(new Intent(this, WebsiteEditActivity.class));
-                break;
-            case 2:
-                startActivity(new Intent(this, ServerEditActivity.class));
-                break;
-            case 3:
-                startActivity(new Intent(this, WifiListActivity.class));
-        }
+        Intent intent = new Intent(this, WifiEditActivity.class);
+        intent.putExtra(WifiEditActivity.EXTRA_SCAN_RESULT, adapter.getScanResultList().get(position));
+        startActivity(intent);
     }
 }

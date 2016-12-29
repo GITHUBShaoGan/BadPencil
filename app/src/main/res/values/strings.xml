@@ -9,10 +9,32 @@
     <!-- Activity Title -->
     <string name="title_activity_pattern_init">设置图案密码</string>
     <string name="title_activity_password_edit_mode">选择编辑模式</string>
+    <string name="title_activity_website_edit">添加网站</string>
+    <string name="title_activity_server_edit">添加服务器</string>
+    <string name="title_activity_wifi_edit">添加Wifi</string>
+    <string name="title_activity_wifi_list">Wifi列表</string>
+    <string name="title_activity_pass_edit">添加密码</string>
 
     <!-- TextView -->
     <string name="tv_pattern_init_tips">绘制解锁图案</string>
     <string name="tv_pattern_init_again">再次绘制解锁图案</string>
+
+    <!-- Hint -->
+    <string name="hint_pass_edit_title">标题</string>
+    <string name="hint_pass_edit_account">账号/登录信息</string>
+    <string name="hint_pass_edit_password">密码</string>
+    <string name="hint_website_edit_url">网站地址</string>
+    <string name="hint_pass_edit_remark">备注</string>
+    <string name="hint_server_edit_address">服务器地址</string>
+    <string name="hint_server_edit_port">端口号</string>
+    <string name="hint_wifi_edit_name">Wifi名称</string>
+    <string name="hint_wifi_edit_router_addr">路由器登录地址</string>
+    <string name="hint_wifi_edit_router_password">路由器登录密码</string>
+    <string name="hint_wifi_edit_operators_account">运营商账号</string>
+    <string name="hint_wifi_edit_operators_password">运营商密码</string>
+
+    <!-- Default Text-->
+    <string name="header_website">https://</string>
 
     <!-- Button -->
     <string name="btn_pattern_init_continue">继续</string>
@@ -25,6 +47,11 @@
     <!--ErrorMsg-->
     <string name="error_pattern_create_empty">密码不能为空</string>
     <string name="error_pattern_create_exists">主密码已经设置，无需重复添加</string>
+    <string name="error_title_cannot_empty">标题不能为空</string>
+    <string name="error_account_cannot_empty">账户不能为空</string>
+    <string name="error_password_cannot_empty">密码不能为空</string>
+    <string name="error_server_address_illegal">非法的服务器地址</string>
+    <string name="error_server_port_illegal">非法端口号</string>
 
     <!--Label-->
     <string name="label_fab_password">密码</string>
@@ -40,6 +67,7 @@
         <item>网站</item>
         <item>银行卡</item>
         <item>服务器</item>
+        <item>Wifi</item>
     </string-array>
 
 </resources>

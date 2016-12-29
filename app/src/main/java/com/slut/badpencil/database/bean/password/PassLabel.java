@@ -1,4 +1,4 @@
-package com.slut.badpencil.database.bean;
+package com.slut.badpencil.database.bean.password;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

@@ -3,6 +3,10 @@
     package="com.slut.badpencil">
 
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:name=".App"
@@ -29,6 +33,17 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".password.edit.mode.EditModeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".password.edit.website.WebsiteEditActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".password.edit.server.ServerEditActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".password.edit.wifi.WifiEditActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".password.edit.wifi.list.WifiListActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

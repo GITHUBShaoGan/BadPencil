@@ -21,10 +21,15 @@ public class EditModeAdapter extends RecyclerView.Adapter<EditModeAdapter.ItemVi
 
     private String[] titleArr;
     private int[] iconArr;
+    private OnItemClickListener onItemClickListener;
 
     public EditModeAdapter(String[] titleArr, int[] iconArr) {
         this.titleArr = titleArr;
         this.iconArr = iconArr;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -34,10 +39,16 @@ public class EditModeAdapter extends RecyclerView.Adapter<EditModeAdapter.ItemVi
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(ItemViewHolder holder, final int position) {
         if (titleArr != null && iconArr != null && position < titleArr.length && iconArr.length == titleArr.length) {
             holder.name.setText(titleArr[position] + "");
             holder.image.setImageResource(iconArr[position]);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.onItemClick(view, position);
+                }
+            });
         }
     }
 
@@ -62,4 +73,9 @@ public class EditModeAdapter extends RecyclerView.Adapter<EditModeAdapter.ItemVi
         }
     }
 
+    public interface OnItemClickListener {
+
+        void onItemClick(View view, int position);
+
+    }
 }
