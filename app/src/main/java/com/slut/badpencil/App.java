@@ -15,8 +15,10 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.slut.badpencil.database.DBConfig;
 import com.slut.badpencil.database.DBHelper;
 import com.slut.badpencil.database.dao.UserConfigDao;
+import com.slut.badpencil.database.dao.password.PassLabelBindDao;
 import com.slut.badpencil.database.dao.password.PassLabelDao;
 import com.slut.badpencil.database.dao.password.PasswordDao;
+import com.slut.badpencil.database.dao.password.WebsitePassDao;
 import com.slut.badpencil.utils.FileUtils;
 
 /**
@@ -98,6 +100,8 @@ public class App extends Application {
         UserConfigDao.getInstances().initDao();
         PasswordDao.getInstances().initDao();
         PassLabelDao.getInstances().initDao();
+        PassLabelBindDao.getInstances().initDao();
+        WebsitePassDao.getInstances().initDao();
     }
 
     public static boolean isLocked() {

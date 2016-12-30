@@ -13,7 +13,7 @@ import android.view.View;
 import com.slut.badpencil.R;
 import com.slut.badpencil.password.edit.original.v.PassEditActivity;
 import com.slut.badpencil.password.edit.server.ServerEditActivity;
-import com.slut.badpencil.password.edit.website.WebsiteEditActivity;
+import com.slut.badpencil.password.edit.website.v.WebsiteEditActivity;
 import com.slut.badpencil.password.edit.wifi.list.WifiListActivity;
 import com.slut.badpencil.utils.ResUtils;
 
@@ -29,6 +29,7 @@ public class EditModeActivity extends AppCompatActivity implements EditModeAdapt
 
     private LinearLayoutManager layoutManager;
     private EditModeAdapter adapter;
+    private static final int REQUEST_CREATE_PASSWORD = 10001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class EditModeActivity extends AppCompatActivity implements EditModeAdapt
         recyclerView.setLayoutManager(layoutManager);
 
         String[] titleArr = ResUtils.getStringArray(R.array.mode_password);
-        int[] iconArr = {R.drawable.ic_website_blue_48, R.drawable.ic_bank_golden_48, R.drawable.ic_server_black_48,R.drawable.ic_wifi_green_24};
+        int[] iconArr = {R.drawable.ic_website_blue_48, R.drawable.ic_bank_golden_48, R.drawable.ic_server_black_48, R.drawable.ic_wifi_green_24};
         adapter = new EditModeAdapter(titleArr, iconArr);
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
@@ -72,7 +73,8 @@ public class EditModeActivity extends AppCompatActivity implements EditModeAdapt
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.skip:
-                startActivity(new Intent(this, PassEditActivity.class));
+                Intent intent = new Intent(this, PassEditActivity.class);
+                startActivityForResult(intent, REQUEST_CREATE_PASSWORD);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -82,13 +84,25 @@ public class EditModeActivity extends AppCompatActivity implements EditModeAdapt
     public void onItemClick(View view, int position) {
         switch (position) {
             case 0:
-                startActivity(new Intent(this, WebsiteEditActivity.class));
+                Intent intent2Website = new Intent(this, WebsiteEditActivity.class);
+                startActivityForResult(intent2Website, REQUEST_CREATE_PASSWORD);
                 break;
             case 2:
-                startActivity(new Intent(this, ServerEditActivity.class));
+                Intent intent2Server = new Intent(this, ServerEditActivity.class);
+                startActivityForResult(intent2Server, REQUEST_CREATE_PASSWORD);
                 break;
             case 3:
-                startActivity(new Intent(this, WifiListActivity.class));
+                Intent intent2Wifi = new Intent(this, WifiListActivity.class);
+                startActivityForResult(intent2Wifi, REQUEST_CREATE_PASSWORD);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            finish();
         }
     }
 }

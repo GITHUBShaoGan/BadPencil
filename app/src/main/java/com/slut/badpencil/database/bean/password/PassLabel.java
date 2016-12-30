@@ -1,5 +1,8 @@
 package com.slut.badpencil.database.bean.password;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -7,7 +10,39 @@ import com.j256.ormlite.table.DatabaseTable;
  * Created by 七月在线科技 on 2016/12/28.
  */
 @DatabaseTable
-public class PassLabel {
+public class PassLabel implements Parcelable{
+
+    protected PassLabel(Parcel in) {
+        uuid = in.readString();
+        name = in.readString();
+        createStamp = in.readLong();
+        updateStamp = in.readLong();
+    }
+
+    public static final Creator<PassLabel> CREATOR = new Creator<PassLabel>() {
+        @Override
+        public PassLabel createFromParcel(Parcel in) {
+            return new PassLabel(in);
+        }
+
+        @Override
+        public PassLabel[] newArray(int size) {
+            return new PassLabel[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(uuid);
+        parcel.writeString(name);
+        parcel.writeLong(createStamp);
+        parcel.writeLong(updateStamp);
+    }
 
     public class Const{
         public static final String COLUMN_TITLE_UUID = "uuid";

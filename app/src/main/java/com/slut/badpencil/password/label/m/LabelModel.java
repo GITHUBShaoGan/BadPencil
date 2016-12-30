@@ -2,6 +2,7 @@ package com.slut.badpencil.password.label.m;
 
 import com.slut.badpencil.database.bean.password.PassLabel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,16 +21,16 @@ public interface LabelModel {
 
     }
 
-    void create(String name,OnCreateListener onCreateListener);
+    void create(String name, OnCreateListener onCreateListener);
 
     interface OnLoadListener {
 
-        void onLoadSuccess(boolean isCompleted, List<PassLabel> passLabelList);
+        void onLoadSuccess(boolean isCompleted, List<PassLabel> passLabelList, List<Boolean> isCheckList);
 
         void onLoadError(String msg);
 
     }
 
-    void load(long pageNO, long pageSize, OnLoadListener onLoadListener);
+    void load(long pageNO, long pageSize, ArrayList<PassLabel> passLabels, OnLoadListener onLoadListener);
 
 }

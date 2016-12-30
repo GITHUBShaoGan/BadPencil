@@ -35,7 +35,7 @@
             android:name=".password.edit.mode.EditModeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".password.edit.website.WebsiteEditActivity"
+            android:name=".password.edit.website.v.WebsiteEditActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".password.edit.server.ServerEditActivity"

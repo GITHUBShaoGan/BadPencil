@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.slut.badpencil.App;
@@ -23,6 +24,15 @@ import butterknife.ButterKnife;
 public class LabelAdapter extends RecyclerView.Adapter<LabelAdapter.ItemViewHolder> {
 
     private List<PassLabel> passLabelList;
+    private List<Boolean> isCheckList;
+
+    public List<Boolean> getIsCheckList() {
+        return isCheckList;
+    }
+
+    public void setIsCheckList(List<Boolean> isCheckList) {
+        this.isCheckList = isCheckList;
+    }
 
     public List<PassLabel> getPassLabelList() {
         return passLabelList;
@@ -39,12 +49,27 @@ public class LabelAdapter extends RecyclerView.Adapter<LabelAdapter.ItemViewHold
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(final ItemViewHolder holder, final int position) {
         if (passLabelList != null && position < passLabelList.size()) {
             PassLabel passLabel = passLabelList.get(position);
             if (passLabel != null) {
                 holder.name.setText(passLabel.getName() + "");
             }
+        }
+        if (isCheckList != null && position < isCheckList.size()) {
+            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    isCheckList.set(position, b);
+                }
+            });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.checkBox.setChecked(!isCheckList.get(position));
+                }
+            });
+            holder.checkBox.setChecked(isCheckList.get(position));
         }
     }
 

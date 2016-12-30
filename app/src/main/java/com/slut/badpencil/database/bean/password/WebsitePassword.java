@@ -8,10 +8,10 @@ import com.slut.badpencil.database.bean.password.Password;
  * Created by 七月在线科技 on 2016/12/29.
  */
 @DatabaseTable
-public class WebsitePassword extends Password {
+public class WebsitePassword extends Password{
 
     @DatabaseField
-    private String uuid;
+    private String passUuid;
     @DatabaseField
     private String url;
 
@@ -19,20 +19,18 @@ public class WebsitePassword extends Password {
 
     }
 
-    public WebsitePassword(String uuid, String title, String account, String password, String remark, int type, long createStamp, long updateStamp, String url) {
+    public WebsitePassword(String uuid, String title, String account, String password, String remark, int type, long createStamp, long updateStamp, String passUuid, String url) {
         super(uuid, title, account, password, remark, type, createStamp, updateStamp);
+        this.passUuid = passUuid;
         this.url = url;
-        this.uuid = uuid;
     }
 
-    @Override
-    public String getUuid() {
-        return uuid;
+    public String getPassUuid() {
+        return passUuid;
     }
 
-    @Override
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setPassUuid(String passUuid) {
+        this.passUuid = passUuid;
     }
 
     public String getUrl() {

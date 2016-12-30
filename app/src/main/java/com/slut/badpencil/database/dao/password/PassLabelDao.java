@@ -50,6 +50,12 @@ public class PassLabelDao {
         }
     }
 
+    public PassLabel queryByUUID(String uuid) throws SQLException {
+        QueryBuilder<PassLabel, Integer> builder = dao.queryBuilder();
+        builder.where().eq(PassLabel.Const.COLUMN_TITLE_UUID, uuid);
+        return builder.queryForFirst();
+    }
+
     public List<PassLabel> queryByPage(long pageNo, long pageSize) throws SQLException {
         QueryBuilder<PassLabel, Integer> builder = dao.queryBuilder();
         long offSet = (pageNo - 1) * pageSize;

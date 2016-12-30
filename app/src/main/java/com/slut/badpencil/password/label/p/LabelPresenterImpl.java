@@ -5,13 +5,14 @@ import com.slut.badpencil.password.label.m.LabelModel;
 import com.slut.badpencil.password.label.m.LabelModelImpl;
 import com.slut.badpencil.password.label.v.LabelView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by 七月在线科技 on 2016/12/30.
  */
 
-public class LabelPresenterImpl implements LabelPresenter, LabelModel.OnLoadListener,LabelModel.OnCreateListener {
+public class LabelPresenterImpl implements LabelPresenter, LabelModel.OnLoadListener, LabelModel.OnCreateListener {
 
     private LabelModel labelModel;
     private LabelView labelView;
@@ -22,8 +23,8 @@ public class LabelPresenterImpl implements LabelPresenter, LabelModel.OnLoadList
     }
 
     @Override
-    public void onLoadSuccess(boolean isCompleted, List<PassLabel> passLabelList) {
-        labelView.onLoadSuccess(isCompleted, passLabelList);
+    public void onLoadSuccess(boolean isCompleted, List<PassLabel> passLabelList, List<Boolean> isCheckList) {
+        labelView.onLoadSuccess(isCompleted, passLabelList, isCheckList);
     }
 
     @Override
@@ -32,13 +33,13 @@ public class LabelPresenterImpl implements LabelPresenter, LabelModel.OnLoadList
     }
 
     @Override
-    public void load(long pageNO, long pageSize) {
-        labelModel.load(pageNO, pageSize, this);
+    public void load(long pageNO, long pageSize, ArrayList<PassLabel> passLabelArrayList) {
+        labelModel.load(pageNO, pageSize, passLabelArrayList, this);
     }
 
     @Override
     public void create(String name) {
-        labelModel.create(name,this);
+        labelModel.create(name, this);
     }
 
     @Override

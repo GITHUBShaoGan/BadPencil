@@ -10,7 +10,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * Created by 七月在线科技 on 2016/12/28.
  */
 @DatabaseTable
-public class Password implements Parcelable{
+public class Password implements Parcelable {
 
     protected Password(Parcel in) {
         uuid = in.readString();
@@ -61,6 +61,17 @@ public class Password implements Parcelable{
         public static final int BANK = 2;
         public static final int SEVER = 3;
         public static final int WIFI = 4;
+    }
+
+    public class Const {
+        public static final String COLUMN_UUID = "uuid";
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_ACCOUNT = "account";
+        public static final String COLUMN_PASSWORD = "password";
+        public static final String COLUMN_UPDATESTAMP = "updateStamp";
+        public static final String COLUMN_REMARK = "remark";
+        public static final String COLUMN_TYPE = "type";
+        public static final String COLUMN_CREATESTAMP = "createStamp";
     }
 
     @DatabaseField

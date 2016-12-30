@@ -2,6 +2,7 @@ package com.slut.badpencil.password.label.v;
 
 import com.slut.badpencil.database.bean.password.PassLabel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
 
 public interface LabelView {
 
-    void onLoadSuccess(boolean isCompleted, List<PassLabel> passLabelList);
+    void onLoadSuccess(boolean isCompleted, List<PassLabel> passLabelList,List<Boolean> isCheckList);
 
     void onLoadError(String msg);
 

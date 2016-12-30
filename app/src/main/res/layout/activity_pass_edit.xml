@@ -105,8 +105,8 @@
                 android:id="@+id/flowLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"></org.apmem.tools.layouts.FlowLayout>
+                android:gravity="right"
+                app:layoutDirection="rtl"></org.apmem.tools.layouts.FlowLayout>
         </LinearLayout>
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

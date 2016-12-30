@@ -9,8 +9,10 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.slut.badpencil.App;
 import com.slut.badpencil.database.bean.UserConfig;
+import com.slut.badpencil.database.bean.password.PassLabelBind;
 import com.slut.badpencil.database.bean.password.PassLabel;
 import com.slut.badpencil.database.bean.password.Password;
+import com.slut.badpencil.database.bean.password.WebsitePassword;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -46,6 +48,8 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, UserConfig.class);
             TableUtils.createTableIfNotExists(connectionSource, Password.class);
             TableUtils.createTableIfNotExists(connectionSource, PassLabel.class);
+            TableUtils.createTableIfNotExists(connectionSource, PassLabelBind.class);
+            TableUtils.createTableIfNotExists(connectionSource, WebsitePassword.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }

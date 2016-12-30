@@ -1,5 +1,6 @@
 package com.slut.badpencil.password.label.v;
 
+import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 import com.slut.badpencil.R;
 import com.slut.badpencil.config.AppConfig;
 import com.slut.badpencil.database.bean.password.PassLabel;
+import com.slut.badpencil.password.edit.original.v.PassEditActivity;
 import com.slut.badpencil.password.label.adapter.LabelAdapter;
 import com.slut.badpencil.password.label.p.LabelPresenter;
 import com.slut.badpencil.password.label.p.LabelPresenterImpl;
@@ -44,10 +47,11 @@ public class LabelActivity extends AppCompatActivity implements LabelView {
 
     private LinearLayoutManager layoutManager;
     private LabelAdapter adapter;
-
     private long pageNO = 1;
-
     private LabelPresenter labelPresenter;
+    public static final String EXTRA_LABEL_LIST = "label_list";
+    public static final String EXTRA_OUTPUT_LIST = "label";
+    private ArrayList<PassLabel> passLabelArrayList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,22 +66,30 @@ public class LabelActivity extends AppCompatActivity implements LabelView {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        labelPresenter = new LabelPresenterImpl(this);
+        passLabelArrayList = new ArrayList<>();
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.hasExtra(EXTRA_LABEL_LIST)) {
+                passLabelArrayList = intent.getParcelableArrayListExtra(EXTRA_LABEL_LIST);
+            }
+        }
 
+        labelPresenter = new LabelPresenterImpl(this);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new LabelAdapter();
         adapter.setPassLabelList(new ArrayList<PassLabel>());
+        adapter.setIsCheckList(new ArrayList<Boolean>());
         recyclerView.setAdapter(adapter);
 
-        labelPresenter.load(pageNO, AppConfig.PAGE_SIZE);
+        labelPresenter.load(pageNO, AppConfig.PAGE_SIZE, passLabelArrayList);
     }
 
     private void initListener() {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                finishWithExtra();
             }
         });
         name.addTextChangedListener(new TextWatcher() {
@@ -107,7 +119,7 @@ public class LabelActivity extends AppCompatActivity implements LabelView {
         recyclerView.addOnScrollListener(new OnLoadScrollListener(layoutManager) {
             @Override
             public void onLoadMore() {
-                labelPresenter.load(pageNO, AppConfig.PAGE_SIZE);
+                labelPresenter.load(pageNO, AppConfig.PAGE_SIZE, passLabelArrayList);
             }
         });
     }
@@ -119,8 +131,9 @@ public class LabelActivity extends AppCompatActivity implements LabelView {
     }
 
     @Override
-    public void onLoadSuccess(boolean isCompleted, List<PassLabel> passLabelList) {
+    public void onLoadSuccess(boolean isCompleted, List<PassLabel> passLabelList, List<Boolean> isCheckList) {
         adapter.getPassLabelList().addAll(passLabelList);
+        adapter.getIsCheckList().addAll(isCheckList);
         adapter.notifyDataSetChanged();
         pageNO++;
     }
@@ -133,9 +146,11 @@ public class LabelActivity extends AppCompatActivity implements LabelView {
     @Override
     public void onCreateSuccess(PassLabel passLabel) {
         adapter.getPassLabelList().add(0, passLabel);
+        adapter.getIsCheckList().add(0, true);
         adapter.notifyItemInserted(0);
         name.setText("");
         tilName.setError("");
+        recyclerView.smoothScrollToPosition(0);
     }
 
     @Override
@@ -146,5 +161,35 @@ public class LabelActivity extends AppCompatActivity implements LabelView {
     @Override
     public void onCreateError(String msg) {
         tilName.setError(msg + "");
+    }
+
+    private void finishWithExtra() {
+        ArrayList<PassLabel> passLabelArrayList = new ArrayList<>();
+        if (adapter != null) {
+            List<PassLabel> passLabels = adapter.getPassLabelList();
+            List<Boolean> isCheckList = adapter.getIsCheckList();
+            if (passLabels != null && isCheckList != null && passLabels.size() == isCheckList.size()) {
+                for (int i = 0; i < passLabels.size(); i++) {
+                    if (isCheckList.get(i)) {
+                        passLabelArrayList.add(passLabels.get(i));
+                    }
+                }
+            }
+        }
+        Intent intent = getIntent();
+        if (intent != null) {
+            intent.putParcelableArrayListExtra(EXTRA_OUTPUT_LIST, passLabelArrayList);
+            setResult(RESULT_OK, intent);
+        }
+        finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finishWithExtra();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

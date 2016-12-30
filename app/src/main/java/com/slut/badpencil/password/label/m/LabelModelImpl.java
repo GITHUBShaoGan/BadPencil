@@ -7,10 +7,8 @@ import com.slut.badpencil.database.bean.password.PassLabel;
 import com.slut.badpencil.database.dao.password.PassLabelDao;
 import com.slut.badpencil.utils.ResUtils;
 
-
-import org.w3c.dom.Text;
-
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,7 +56,7 @@ public class LabelModelImpl implements LabelModel {
     }
 
     @Override
-    public void load(long pageNO, long pageSize, OnLoadListener onLoadListener) {
+    public void load(long pageNO, long pageSize, ArrayList<PassLabel> passLabelArrayList, OnLoadListener onLoadListener) {
         if (pageNO < 1) {
             onLoadListener.onLoadError(ResUtils.getString(R.string.error_invalid_pageno));
             return;
@@ -79,10 +77,23 @@ public class LabelModelImpl implements LabelModel {
             return;
         }
         if (passLabels != null) {
+            List<Boolean> isCheckList = new ArrayList<>();
+            for (PassLabel passLabel : passLabels) {
+                boolean flag = false;
+                if (passLabelArrayList != null) {
+                    for (PassLabel label : passLabelArrayList) {
+                        if (label.getUuid().equals(passLabel.getUuid())) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+                isCheckList.add(flag);
+            }
             if (passLabels.size() < pageSize) {
-                onLoadListener.onLoadSuccess(true, passLabels);
+                onLoadListener.onLoadSuccess(true, passLabels, isCheckList);
             } else {
-                onLoadListener.onLoadSuccess(false, passLabels);
+                onLoadListener.onLoadSuccess(false, passLabels, isCheckList);
             }
         } else {
             onLoadListener.onLoadError(ResUtils.getString(R.string.error_load_failed));
