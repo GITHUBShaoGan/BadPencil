@@ -1,5 +1,8 @@
 package com.slut.badpencil.database.bean.password;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -7,7 +10,47 @@ import com.j256.ormlite.table.DatabaseTable;
  * Created by 七月在线科技 on 2016/12/28.
  */
 @DatabaseTable
-public class Password {
+public class Password implements Parcelable{
+
+    protected Password(Parcel in) {
+        uuid = in.readString();
+        title = in.readString();
+        account = in.readString();
+        password = in.readString();
+        remark = in.readString();
+        type = in.readInt();
+        createStamp = in.readLong();
+        updateStamp = in.readLong();
+    }
+
+    public static final Creator<Password> CREATOR = new Creator<Password>() {
+        @Override
+        public Password createFromParcel(Parcel in) {
+            return new Password(in);
+        }
+
+        @Override
+        public Password[] newArray(int size) {
+            return new Password[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(uuid);
+        parcel.writeString(title);
+        parcel.writeString(account);
+        parcel.writeString(password);
+        parcel.writeString(remark);
+        parcel.writeInt(type);
+        parcel.writeLong(createStamp);
+        parcel.writeLong(updateStamp);
+    }
 
     /**
      * 密码的类型

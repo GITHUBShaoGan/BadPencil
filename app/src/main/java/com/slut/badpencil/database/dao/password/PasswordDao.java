@@ -6,6 +6,8 @@ import com.slut.badpencil.database.bean.UserConfig;
 import com.slut.badpencil.database.bean.password.Password;
 import com.slut.badpencil.database.dao.UserConfigDao;
 
+import java.sql.SQLException;
+
 /**
  * Created by 七月在线科技 on 2016/12/29.
  */
@@ -30,4 +32,7 @@ public class PasswordDao {
         dao = App.getDbHelper().getDao(Password.class);
     }
 
+    public void createSingle(Password password)throws SQLException{
+        dao.create(password);
+    }
 }

@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".password.edit.original.PassEditActivity"
+            android:name=".password.edit.original.v.PassEditActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".password.edit.mode.EditModeActivity"
@@ -43,8 +43,12 @@
         <activity
             android:name=".password.edit.wifi.WifiEditActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".password.edit.wifi.list.WifiListActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".password.edit.wifi.list.WifiListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".password.label.v.LabelActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
 
 </manifest>

@@ -11,10 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.slut.badpencil.R;
-import com.slut.badpencil.password.edit.original.PassEditActivity;
+import com.slut.badpencil.password.edit.original.v.PassEditActivity;
 import com.slut.badpencil.password.edit.server.ServerEditActivity;
 import com.slut.badpencil.password.edit.website.WebsiteEditActivity;
-import com.slut.badpencil.password.edit.wifi.WifiEditActivity;
 import com.slut.badpencil.password.edit.wifi.list.WifiListActivity;
 import com.slut.badpencil.utils.ResUtils;
 

@@ -14,6 +14,7 @@
     <string name="title_activity_wifi_edit">添加Wifi</string>
     <string name="title_activity_wifi_list">Wifi列表</string>
     <string name="title_activity_pass_edit">添加密码</string>
+    <string name="title_activity_pass_label">标签</string>
 
     <!-- TextView -->
     <string name="tv_pattern_init_tips">绘制解锁图案</string>
@@ -32,6 +33,7 @@
     <string name="hint_wifi_edit_router_password">路由器登录密码</string>
     <string name="hint_wifi_edit_operators_account">运营商账号</string>
     <string name="hint_wifi_edit_operators_password">运营商密码</string>
+    <string name="hint_label_name">标签名称</string>
 
     <!-- Default Text-->
     <string name="header_website">https://</string>
@@ -40,9 +42,11 @@
     <string name="btn_pattern_init_continue">继续</string>
     <string name="btn_pattern_init_reset">清除</string>
     <string name="btn_pattern_init_ensure">确认</string>
+    <string name="btn_label_create">创建标签</string>
 
     <!--Menu Action-->
     <string name="action_menu_skip">SKIP</string>
+    <string name="action_menu_label">LABEL</string>
 
     <!--ErrorMsg-->
     <string name="error_pattern_create_empty">密码不能为空</string>
@@ -52,6 +56,30 @@
     <string name="error_password_cannot_empty">密码不能为空</string>
     <string name="error_server_address_illegal">非法的服务器地址</string>
     <string name="error_server_port_illegal">非法端口号</string>
+    <string name="error_unknown_exception_happened">抱歉，发生未知异常</string>
+    <string name="error_invalid_pagesize">非法的页面大小</string>
+    <string name="error_invalid_pageno">非法的页码</string>
+    <string name="error_load_failed">加载数据失败</string>
+    <string name="error_label_name_cannot_empty">标签名称不能为空</string>
+    <string name="error_label_name_exists">标签已存在</string>
+
+    <!--Dialog Title-->
+    <string name="title_dialog_pass_edit_empty">温馨提示</string>
+
+    <!--Dialog Message-->
+    <string name="msg_dialog_pass_edit_empty">系统检测到编辑了某些条目，但编辑不完整，确认要放弃编辑吗？</string>
+
+    <!--Dialog Button-->
+    <string name="action_dialog_ok">确定</string>
+    <string name="action_dialog_cancel">取消</string>
+    <string name="action_dialog_giveup_edit">放弃编辑</string>
+    <string name="action_dialog_return_to_edit">返回修改</string>
+
+    <!--CheckBox-->
+    <string name="cb_never_show_again">下次不再显示</string>
+
+    <!--SuccessMsg-->
+    <string name="success_pass_create_success">创建密码成功</string>
 
     <!--Label-->
     <string name="label_fab_password">密码</string>
