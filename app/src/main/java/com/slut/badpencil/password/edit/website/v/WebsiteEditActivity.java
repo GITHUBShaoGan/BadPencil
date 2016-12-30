@@ -206,6 +206,16 @@ public class WebsiteEditActivity extends AppCompatActivity implements WebsiteEdi
         return super.onOptionsItemSelected(item);
     }
 
+    private void update() {
+        String t = title.getText().toString().trim();
+        String a = account.getText().toString().trim();
+        String p = password.getText().toString().trim();
+        String addr = url.getText().toString().trim();
+        String r = remark.getText().toString().trim();
+
+        presenter.update(primaryPassword, t, a, p, addr, r, extraPassLabelArrayList);
+    }
+
     private void checkUI() {
         String t = title.getText().toString().trim();
         String a = account.getText().toString().trim();
@@ -336,10 +346,35 @@ public class WebsiteEditActivity extends AppCompatActivity implements WebsiteEdi
     }
 
     @Override
+    public void onUpdateSuccess() {
+
+    }
+
+    @Override
+    public void onUpdateEmptyTitle() {
+
+    }
+
+    @Override
+    public void onUpdateEmptyAccount() {
+
+    }
+
+    @Override
+    public void onUpdateEmptyPassword() {
+
+    }
+
+    @Override
+    public void onUpdateError(String msg) {
+
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            switch (requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case REQUEST_SET_LABELS:
                     if (data != null) {
                         if (data.hasExtra(LabelActivity.EXTRA_OUTPUT_LIST)) {

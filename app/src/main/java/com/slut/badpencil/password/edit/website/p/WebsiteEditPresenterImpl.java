@@ -14,7 +14,7 @@ import java.util.List;
  * Created by 七月在线科技 on 2016/12/30.
  */
 
-public class WebsiteEditPresenterImpl implements WebsiteEditPresenter, WebsiteEditModel.OnQueryLabelsListener, WebsiteEditModel.OnCheckUIListener, WebsiteEditModel.OnCreateListener {
+public class WebsiteEditPresenterImpl implements WebsiteEditPresenter, WebsiteEditModel.OnQueryLabelsListener, WebsiteEditModel.OnCheckUIListener, WebsiteEditModel.OnCreateListener, WebsiteEditModel.OnUpdateListener {
 
     private WebsiteEditModel websiteEditModel;
     private WebsiteEditView websiteEditView;
@@ -47,6 +47,11 @@ public class WebsiteEditPresenterImpl implements WebsiteEditPresenter, WebsiteEd
     @Override
     public void create(String title, String account, String password, String url, String remark, ArrayList<PassLabel> passLabelArrayList) {
         websiteEditModel.create(title, account, password, url, remark, passLabelArrayList, this);
+    }
+
+    @Override
+    public void update(WebsitePassword websitePassword, String title, String account, String password, String url, String remark, ArrayList<PassLabel> passLabels) {
+        websiteEditModel.update(websitePassword, title, account, password, url, remark, passLabels, this);
     }
 
     @Override
@@ -87,5 +92,30 @@ public class WebsiteEditPresenterImpl implements WebsiteEditPresenter, WebsiteEd
     @Override
     public void onCreateError(String msg) {
         websiteEditView.onCreateError(msg);
+    }
+
+    @Override
+    public void onUpdateSuccess() {
+        websiteEditView.onUpdateSuccess();
+    }
+
+    @Override
+    public void onUpdateEmptyTitle() {
+        websiteEditView.onUpdateEmptyTitle();
+    }
+
+    @Override
+    public void onUpdateEmptyAccount() {
+        websiteEditView.onUpdateEmptyAccount();
+    }
+
+    @Override
+    public void onUpdateEmptyPassword() {
+        websiteEditView.onUpdateEmptyPassword();
+    }
+
+    @Override
+    public void onUpdateError(String msg) {
+        websiteEditView.onUpdateError(msg);
     }
 }

@@ -150,4 +150,25 @@ public class WebsiteEditModelImpl implements WebsiteEditModel {
         }
     }
 
+    @Override
+    public void update(WebsitePassword websitePassword, String title, String account, String password, String url, String remark, ArrayList<PassLabel> passLabels, OnUpdateListener onUpdateListener) {
+        if(websitePassword == null){
+            onUpdateListener.onUpdateError(ResUtils.getString(R.string.error_cannot_update_null));
+            return;
+        }
+        if(TextUtils.isEmpty(title.trim())){
+            onUpdateListener.onUpdateEmptyTitle();
+            return;
+        }
+        if(TextUtils.isEmpty(account.trim())){
+            onUpdateListener.onUpdateEmptyAccount();
+            return;
+        }
+        if(TextUtils.isEmpty(password.trim())){
+            onUpdateListener.onUpdateEmptyPassword();
+            return;
+        }
+
+    }
+
 }

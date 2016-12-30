@@ -17,4 +17,6 @@ public interface WebsiteEditPresenter {
 
     void create(String title,String account,String password,String url,String remark,ArrayList<PassLabel> passLabelArrayList);
 
+    void update(WebsitePassword websitePassword,String title, String account, String password, String url, String remark, ArrayList<PassLabel> passLabels);
+
 }

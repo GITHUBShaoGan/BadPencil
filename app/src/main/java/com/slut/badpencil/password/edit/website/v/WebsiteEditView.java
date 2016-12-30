@@ -31,4 +31,14 @@ public interface WebsiteEditView {
 
     void onCreateError(String msg);
 
+    void onUpdateSuccess();
+
+    void onUpdateEmptyTitle();
+
+    void onUpdateEmptyAccount();
+
+    void onUpdateEmptyPassword();
+
+    void onUpdateError(String msg);
+
 }

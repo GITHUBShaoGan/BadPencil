@@ -22,7 +22,7 @@ public interface WebsiteEditModel {
 
     void queryLabels(WebsitePassword websitePassword, OnQueryLabelsListener onQueryLabelsListener);
 
-    interface OnCheckUIListener{
+    interface OnCheckUIListener {
 
         void onUIChange();
 
@@ -32,9 +32,9 @@ public interface WebsiteEditModel {
 
     }
 
-    void checkUI(WebsitePassword primaryPassword, String title, String account, String password, String url, String remark, ArrayList<PassLabel> passLabelArrayList,ArrayList<PassLabel> primaryLabelList,OnCheckUIListener onCheckUIListener);
+    void checkUI(WebsitePassword primaryPassword, String title, String account, String password, String url, String remark, ArrayList<PassLabel> passLabelArrayList, ArrayList<PassLabel> primaryLabelList, OnCheckUIListener onCheckUIListener);
 
-    interface OnCreateListener{
+    interface OnCreateListener {
 
         void onCreateSuccess(WebsitePassword password);
 
@@ -48,5 +48,22 @@ public interface WebsiteEditModel {
 
     }
 
-    void create(String title,String account,String password,String url,String remark,ArrayList<PassLabel> passLabelArrayList,OnCreateListener onCreateListener);
+    void create(String title, String account, String password, String url, String remark, ArrayList<PassLabel> passLabelArrayList, OnCreateListener onCreateListener);
+
+    interface OnUpdateListener {
+
+        void onUpdateSuccess();
+
+        void onUpdateEmptyTitle();
+
+        void onUpdateEmptyAccount();
+
+        void onUpdateEmptyPassword();
+
+        void onUpdateError(String msg);
+
+    }
+
+    void update(WebsitePassword websitePassword,String title, String account, String password, String url, String remark, ArrayList<PassLabel> passLabels, OnUpdateListener onUpdateListener);
+
 }

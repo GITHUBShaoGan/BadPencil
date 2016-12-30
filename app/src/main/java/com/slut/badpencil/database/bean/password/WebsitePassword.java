@@ -10,7 +10,7 @@ import com.slut.badpencil.database.bean.password.Password;
 @DatabaseTable
 public class WebsitePassword extends Password{
 
-    @DatabaseField
+    @DatabaseField(id = true)
     private String passUuid;
     @DatabaseField
     private String url;

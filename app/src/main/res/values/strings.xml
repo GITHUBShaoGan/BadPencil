@@ -63,6 +63,7 @@
     <string name="error_label_name_cannot_empty">标签名称不能为空</string>
     <string name="error_label_name_exists">标签已存在</string>
     <string name="error_cannot_query_from_null">无法从空条件开始查询</string>
+    <string name="error_cannot_update_null">无法更新空对象</string>
 
     <!--Dialog Title-->
     <string name="title_dialog_pass_edit_empty">温馨提示</string>
