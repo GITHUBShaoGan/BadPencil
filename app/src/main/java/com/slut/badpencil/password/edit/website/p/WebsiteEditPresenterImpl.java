@@ -95,8 +95,8 @@ public class WebsiteEditPresenterImpl implements WebsiteEditPresenter, WebsiteEd
     }
 
     @Override
-    public void onUpdateSuccess() {
-        websiteEditView.onUpdateSuccess();
+    public void onUpdateSuccess(WebsitePassword websitePassword) {
+        websiteEditView.onUpdateSuccess(websitePassword);
     }
 
     @Override

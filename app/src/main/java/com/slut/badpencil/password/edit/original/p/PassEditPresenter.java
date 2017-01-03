@@ -17,4 +17,6 @@ public interface PassEditPresenter {
 
     void queryLabels(Password password);
 
+    void update(Password password,String title,String account,String pass,String remark,ArrayList<PassLabel> passLabelArrayList);
+
 }

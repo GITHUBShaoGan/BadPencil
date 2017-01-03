@@ -33,4 +33,15 @@ public interface PassEditView {
 
     void onQueryError(String msg);
 
+
+    void onUpdateSuccess(Password password);
+
+    void onUpdateEmptyTitle();
+
+    void onUpdateEmptyAccount();
+
+    void onUpdateEmptyPassword();
+
+    void onUpdateError(String msg);
+
 }

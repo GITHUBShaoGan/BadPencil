@@ -3,6 +3,7 @@ package com.slut.badpencil.database.dao.password;
 import android.content.Intent;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.slut.badpencil.App;
 import com.slut.badpencil.database.bean.password.PassLabel;

@@ -52,7 +52,7 @@ public interface WebsiteEditModel {
 
     interface OnUpdateListener {
 
-        void onUpdateSuccess();
+        void onUpdateSuccess(WebsitePassword websitePassword);
 
         void onUpdateEmptyTitle();
 

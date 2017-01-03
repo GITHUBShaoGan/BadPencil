@@ -82,6 +82,7 @@
 
     <!--SuccessMsg-->
     <string name="success_pass_create">创建密码成功</string>
+    <string name="success_pass_update">更新密码成功</string>
 
     <!--Label-->
     <string name="label_fab_password">密码</string>

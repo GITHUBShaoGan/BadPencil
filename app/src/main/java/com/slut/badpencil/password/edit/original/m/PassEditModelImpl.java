@@ -25,9 +25,22 @@ import java.util.UUID;
 
 public class PassEditModelImpl implements PassEditModel {
 
+    /**
+     * 检验用户是否修改过界面
+     *
+     * @param primaryPassword   原先传入的密码对象
+     * @param title             标题
+     * @param account           账号
+     * @param password          密码
+     * @param remark            备注
+     * @param passLabels        待更新的标签信息
+     * @param primaryPassLabels 原来的标签信息
+     * @param onCheckUICallback 监听器
+     */
     @Override
     public void checkUI(Password primaryPassword, String title, String account, String password, String remark, ArrayList<PassLabel> passLabels, ArrayList<PassLabel> primaryPassLabels, OnCheckUICallback onCheckUICallback) {
         if (primaryPassword == null) {
+            //insert mode
             if (TextUtils.isEmpty(title.trim()) &&
                     TextUtils.isEmpty(account.trim()) &&
                     TextUtils.isEmpty(password.trim()) &&
@@ -49,6 +62,7 @@ public class PassEditModelImpl implements PassEditModel {
                 }
             }
         } else {
+            //update mode
             if (TextUtils.equals(primaryPassword.getTitle(), title.trim()) &&
                     TextUtils.equals(primaryPassword.getAccount(), account.trim()) &&
                     TextUtils.equals(primaryPassword.getPassword(), RSAUtils.encrypt(password.trim())) &&
@@ -144,6 +158,58 @@ public class PassEditModelImpl implements PassEditModel {
                 onQueryLabelListener.onQueryError(e.getLocalizedMessage());
             } else {
                 onQueryLabelListener.onQueryError(ResUtils.getString(R.string.error_unknown_exception_happened));
+            }
+        }
+    }
+
+    /**
+     * 更新密码信息
+     *
+     * @param password           待更新的密码对象
+     * @param title              标题
+     * @param account            账号信息
+     * @param pass               密码
+     * @param remark             备注
+     * @param passLabelArrayList 标签信息
+     * @param onUpdateListener   监听器
+     */
+    @Override
+    public void update(Password password, String title, String account, String pass, String remark, ArrayList<PassLabel> passLabelArrayList, OnUpdateListener onUpdateListener) {
+        if (password == null) {
+            onUpdateListener.onUpdateError(ResUtils.getString(R.string.error_cannot_update_null));
+            return;
+        }
+        if (TextUtils.isEmpty(title.trim())) {
+            onUpdateListener.onUpdateError(ResUtils.getString(R.string.error_title_cannot_empty));
+            return;
+        }
+        if (TextUtils.isEmpty(account.trim())) {
+            onUpdateListener.onUpdateError(ResUtils.getString(R.string.error_account_cannot_empty));
+            return;
+        }
+        if (TextUtils.isEmpty(pass.trim())) {
+            onUpdateListener.onUpdateError(ResUtils.getString(R.string.error_password_cannot_empty));
+            return;
+        }
+        String uuid = password.getUuid();
+        try {
+            PasswordDao.getInstances().updateSingle(uuid, title, account, RSAUtils.encrypt(pass), remark);
+            PassLabelBindDao.getInstances().deleteByPasswordUUID(uuid);
+            for (PassLabel passLabel : passLabelArrayList) {
+                String id = UUID.randomUUID().toString();
+                PassLabelBind passLabelBind = new PassLabelBind(id, uuid, passLabel.getUuid(), System.currentTimeMillis());
+                PassLabelBindDao.getInstances().createSingle(passLabelBind);
+            }
+            password.setTitle(title);
+            password.setAccount(account);
+            password.setPassword(RSAUtils.encrypt(pass));
+            password.setRemark(remark);
+            onUpdateListener.onUpdateSuccess(password);
+        } catch (SQLException e) {
+            if (e != null && !TextUtils.isEmpty(e.getLocalizedMessage())) {
+                onUpdateListener.onUpdateError(e.getLocalizedMessage());
+            } else {
+                onUpdateListener.onUpdateError(ResUtils.getString(R.string.error_unknown_exception_happened));
             }
         }
     }

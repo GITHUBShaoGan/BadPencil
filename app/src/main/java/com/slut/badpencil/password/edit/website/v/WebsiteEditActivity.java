@@ -346,28 +346,33 @@ public class WebsiteEditActivity extends AppCompatActivity implements WebsiteEdi
     }
 
     @Override
-    public void onUpdateSuccess() {
-
+    public void onUpdateSuccess(WebsitePassword websitePassword) {
+        ToastUtils.showShort(R.string.success_pass_update);
+        Intent intent = getIntent();
+        if (intent != null) {
+            setResult(RESULT_OK, intent);
+        }
+        finish();
     }
 
     @Override
     public void onUpdateEmptyTitle() {
-
+        tilTitle.setError(ResUtils.getString(R.string.error_title_cannot_empty));
     }
 
     @Override
     public void onUpdateEmptyAccount() {
-
+        tilAccount.setError(ResUtils.getString(R.string.error_account_cannot_empty));
     }
 
     @Override
     public void onUpdateEmptyPassword() {
-
+        tilPassword.setError(ResUtils.getString(R.string.error_password_cannot_empty));
     }
 
     @Override
     public void onUpdateError(String msg) {
-
+        ToastUtils.showShort(msg);
     }
 
     @Override

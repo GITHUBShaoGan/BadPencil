@@ -152,23 +152,47 @@ public class WebsiteEditModelImpl implements WebsiteEditModel {
 
     @Override
     public void update(WebsitePassword websitePassword, String title, String account, String password, String url, String remark, ArrayList<PassLabel> passLabels, OnUpdateListener onUpdateListener) {
-        if(websitePassword == null){
+        if (websitePassword == null) {
             onUpdateListener.onUpdateError(ResUtils.getString(R.string.error_cannot_update_null));
             return;
         }
-        if(TextUtils.isEmpty(title.trim())){
+        if (TextUtils.isEmpty(title.trim())) {
             onUpdateListener.onUpdateEmptyTitle();
             return;
         }
-        if(TextUtils.isEmpty(account.trim())){
+        if (TextUtils.isEmpty(account.trim())) {
             onUpdateListener.onUpdateEmptyAccount();
             return;
         }
-        if(TextUtils.isEmpty(password.trim())){
+        if (TextUtils.isEmpty(password.trim())) {
             onUpdateListener.onUpdateEmptyPassword();
             return;
         }
-
+        String uuid = websitePassword.getPassUuid();
+        String passAfterEncrypt = RSAUtils.encrypt(password);
+        try {
+            PasswordDao.getInstances().updateSingle(uuid, title, account, passAfterEncrypt, remark);
+            WebsitePassDao.getInstances().updateSingle(uuid, url);
+            PassLabelBindDao.getInstances().deleteByPasswordUUID(uuid);
+            for (PassLabel passLabel : passLabels) {
+                String id = UUID.randomUUID().toString();
+                PassLabelBind passLabelBind = new PassLabelBind(id, uuid, passLabel.getUuid(), System.currentTimeMillis());
+                PassLabelBindDao.getInstances().createSingle(passLabelBind);
+            }
+            websitePassword.setTitle(title);
+            websitePassword.setAccount(account);
+            websitePassword.setPassword(passAfterEncrypt);
+            websitePassword.setUrl(url);
+            websitePassword.setRemark(remark);
+            websitePassword.setUpdateStamp(System.currentTimeMillis());
+            onUpdateListener.onUpdateSuccess(websitePassword);
+        } catch (SQLException e) {
+            if (e != null && !TextUtils.isEmpty(e.getLocalizedMessage())) {
+                onUpdateListener.onUpdateError(e.getLocalizedMessage());
+            } else {
+                onUpdateListener.onUpdateError(ResUtils.getString(R.string.error_unknown_exception_happened));
+            }
+        }
     }
 
 }

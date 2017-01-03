@@ -192,13 +192,22 @@ public class PassEditActivity extends AppCompatActivity implements PassEditView 
     /**
      * 开始插入数据
      */
-    private void save() {
+    private void insert() {
         String t = title.getText().toString().trim();
         String a = account.getText().toString().trim();
         String p = password.getText().toString().trim();
         String r = remark.getText().toString().trim();
 
         presenter.create(t, a, p, r, extraArrayLabelList);
+    }
+
+    private void update(){
+        String t = title.getText().toString().trim();
+        String a = account.getText().toString().trim();
+        String p = password.getText().toString().trim();
+        String r = remark.getText().toString().trim();
+
+        presenter.update(primaryPassword,t,a,p,r,extraArrayLabelList);
     }
 
     private void checkUI() {
@@ -224,9 +233,10 @@ public class PassEditActivity extends AppCompatActivity implements PassEditView 
         //用户编辑了内容
         if (primaryPassword == null) {
             //新建模式
-            save();
+            insert();
         } else {
             //更新模式
+            update();
         }
     }
 
@@ -319,6 +329,36 @@ public class PassEditActivity extends AppCompatActivity implements PassEditView 
 
     @Override
     public void onQueryError(String msg) {
+        ToastUtils.showShort(msg);
+    }
+
+    @Override
+    public void onUpdateSuccess(Password password) {
+        ToastUtils.showShort(R.string.success_pass_update);
+        Intent intent = getIntent();
+        if (intent != null) {
+            setResult(RESULT_OK, intent);
+        }
+        finish();
+    }
+
+    @Override
+    public void onUpdateEmptyTitle() {
+        tilTitle.setError(ResUtils.getString(R.string.error_title_cannot_empty));
+    }
+
+    @Override
+    public void onUpdateEmptyAccount() {
+        tilAccount.setError(ResUtils.getString(R.string.error_account_cannot_empty));
+    }
+
+    @Override
+    public void onUpdateEmptyPassword() {
+        tilPassword.setError(ResUtils.getString(R.string.error_password_cannot_empty));
+    }
+
+    @Override
+    public void onUpdateError(String msg) {
         ToastUtils.showShort(msg);
     }
 

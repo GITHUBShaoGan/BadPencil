@@ -1,6 +1,7 @@
 package com.slut.badpencil.database.dao.password;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.slut.badpencil.App;
 import com.slut.badpencil.database.bean.password.PassLabelBind;
@@ -43,4 +44,9 @@ public class PassLabelBindDao {
         return builder.query();
     }
 
+    public void deleteByPasswordUUID(String uuid)throws SQLException{
+        DeleteBuilder<PassLabelBind,Integer> builder = dao.deleteBuilder();
+        builder.where().eq(PassLabelBind.Const.COLUMN_TITLE_PASS_UUID,uuid);
+        builder.delete();
+    }
 }

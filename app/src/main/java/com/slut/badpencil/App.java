@@ -93,7 +93,7 @@ public class App extends Application {
     }
 
     public static void initHelper() {
-        dbHelper = new DBHelper(getContext(), DBConfig.DB_NAME, null, DBConfig.DB_VERSION);
+        dbHelper = DBHelper.getHelper();
     }
 
     private void initDao() {

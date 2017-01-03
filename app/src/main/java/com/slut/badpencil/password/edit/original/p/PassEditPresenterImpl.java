@@ -13,7 +13,7 @@ import java.util.List;
  * Created by 七月在线科技 on 2016/12/29.
  */
 
-public class PassEditPresenterImpl implements PassEditPresenter, PassEditModel.OnCreateCallback, PassEditModel.OnCheckUICallback, PassEditModel.OnQueryLabelListener {
+public class PassEditPresenterImpl implements PassEditPresenter, PassEditModel.OnCreateCallback, PassEditModel.OnCheckUICallback, PassEditModel.OnQueryLabelListener,PassEditModel.OnUpdateListener {
 
     private PassEditModel passEditModel;
     private PassEditView passEditView;
@@ -64,6 +64,11 @@ public class PassEditPresenterImpl implements PassEditPresenter, PassEditModel.O
     }
 
     @Override
+    public void update(Password password, String title, String account, String pass, String remark, ArrayList<PassLabel> passLabelArrayList) {
+        passEditModel.update(password,title,account,pass,remark,passLabelArrayList,this);
+    }
+
+    @Override
     public void onUIChange() {
         passEditView.onUIChange();
     }
@@ -86,5 +91,30 @@ public class PassEditPresenterImpl implements PassEditPresenter, PassEditModel.O
     @Override
     public void onQueryError(String msg) {
         passEditView.onQueryError(msg);
+    }
+
+    @Override
+    public void onUpdateSuccess(Password password) {
+        passEditView.onUpdateSuccess(password);
+    }
+
+    @Override
+    public void onUpdateEmptyTitle() {
+        passEditView.onUpdateEmptyTitle();
+    }
+
+    @Override
+    public void onUpdateEmptyAccount() {
+        passEditView.onUpdateEmptyAccount();
+    }
+
+    @Override
+    public void onUpdateEmptyPassword() {
+        passEditView.onUpdateEmptyPassword();
+    }
+
+    @Override
+    public void onUpdateError(String msg) {
+        passEditView.onUpdateError(msg);
     }
 }

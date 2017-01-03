@@ -49,4 +49,21 @@ public interface PassEditModel {
     }
 
     void queryLabels(Password password,OnQueryLabelListener onQueryLabelListener);
+
+
+    interface OnUpdateListener{
+
+        void onUpdateSuccess(Password password);
+
+        void onUpdateEmptyTitle();
+
+        void onUpdateEmptyAccount();
+
+        void onUpdateEmptyPassword();
+
+        void onUpdateError(String msg);
+
+    }
+
+    void update(Password password,String title,String account,String pass,String remark,ArrayList<PassLabel> passLabelArrayList,OnUpdateListener onUpdateListener);
 }

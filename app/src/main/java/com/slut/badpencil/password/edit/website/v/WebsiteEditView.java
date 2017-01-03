@@ -31,7 +31,7 @@ public interface WebsiteEditView {
 
     void onCreateError(String msg);
 
-    void onUpdateSuccess();
+    void onUpdateSuccess(WebsitePassword websitePassword);
 
     void onUpdateEmptyTitle();
 
