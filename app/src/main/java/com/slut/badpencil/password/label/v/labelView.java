@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface LabelView {
 
-    void onLoadSuccess(boolean isCompleted, List<PassLabel> passLabelList,List<Boolean> isCheckList);
+    void onLoadSuccess(boolean isCompleted, List<PassLabel> passLabelList, List<Boolean> isCheckList);
 
     void onLoadError(String msg);
 

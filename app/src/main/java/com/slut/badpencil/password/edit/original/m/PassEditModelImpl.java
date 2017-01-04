@@ -180,15 +180,15 @@ public class PassEditModelImpl implements PassEditModel {
             return;
         }
         if (TextUtils.isEmpty(title.trim())) {
-            onUpdateListener.onUpdateError(ResUtils.getString(R.string.error_title_cannot_empty));
+            onUpdateListener.onUpdateEmptyTitle();
             return;
         }
         if (TextUtils.isEmpty(account.trim())) {
-            onUpdateListener.onUpdateError(ResUtils.getString(R.string.error_account_cannot_empty));
+            onUpdateListener.onUpdateEmptyAccount();
             return;
         }
         if (TextUtils.isEmpty(pass.trim())) {
-            onUpdateListener.onUpdateError(ResUtils.getString(R.string.error_password_cannot_empty));
+            onUpdateListener.onUpdateEmptyPassword();
             return;
         }
         String uuid = password.getUuid();

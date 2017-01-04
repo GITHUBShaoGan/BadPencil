@@ -9,8 +9,14 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable
 public class ServerPassword extends Password{
 
+    public class Const{
+        public static final String COLUMN_PASS_UUID ="passUUID";
+        public static final String COLUMN_ADDRESS ="address";
+        public static final String COLUMN_PORT ="port";
+    }
+
     @DatabaseField
-    private String uuid;
+    private String passUUID;
     @DatabaseField
     private String address;
     @DatabaseField
@@ -19,21 +25,19 @@ public class ServerPassword extends Password{
     public ServerPassword() {
     }
 
-    public ServerPassword(String uuid, String title, String account, String password, String remark, int type, long createStamp, long updateStamp, String address, int port) {
+    public ServerPassword(String uuid, String title, String account, String password, String remark, int type, long createStamp, long updateStamp, String passUUID, String address, int port) {
         super(uuid, title, account, password, remark, type, createStamp, updateStamp);
+        this.passUUID = passUUID;
         this.address = address;
         this.port = port;
-        this.uuid = uuid;
     }
 
-    @Override
-    public String getUuid() {
-        return uuid;
+    public String getPassUUID() {
+        return passUUID;
     }
 
-    @Override
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setPassUUID(String passUUID) {
+        this.passUUID = passUUID;
     }
 
     public String getAddress() {
