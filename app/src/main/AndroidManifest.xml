@@ -17,10 +17,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".main.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/app_name" />
         <activity
             android:name=".master.pattern.v.PatternInitActivity"
+            android:theme="@style/AppTheme.WithActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,26 +28,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".password.edit.original.v.PassEditActivity" />
+        <activity android:name=".password.edit.mode.EditModeActivity" />
+        <activity android:name=".password.edit.website.v.WebsiteEditActivity" />
+        <activity android:name=".password.edit.server.v.ServerEditActivity" />
+        <activity android:name=".password.edit.wifi.WifiEditActivity" />
+        <activity android:name=".password.edit.wifi.list.WifiListActivity" />
         <activity
-            android:name=".password.edit.original.v.PassEditActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".password.edit.mode.EditModeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".password.edit.website.v.WebsiteEditActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".password.edit.server.v.ServerEditActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".password.edit.wifi.WifiEditActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".password.edit.wifi.list.WifiListActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".password.label.v.LabelActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".password.label.v.LabelActivity"
             android:windowSoftInputMode="stateHidden"></activity>
     </application>
 

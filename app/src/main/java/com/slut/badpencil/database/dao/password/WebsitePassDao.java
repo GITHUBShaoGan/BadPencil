@@ -1,6 +1,7 @@
 package com.slut.badpencil.database.dao.password;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.slut.badpencil.App;
 import com.slut.badpencil.database.bean.password.PassLabel;
@@ -41,6 +42,12 @@ public class WebsitePassDao {
         builder.where().eq(WebsitePassword.Const.COLUMN_PASS_UUID,uuid);
         builder.updateColumnValue(WebsitePassword.Const.COLUMN_URL,url);
         builder.update();
+    }
+
+    public WebsitePassword querySingle(String uuid)throws SQLException{
+        QueryBuilder<WebsitePassword,Integer> builder = dao.queryBuilder();
+        builder.where().eq(WebsitePassword.Const.COLUMN_PASS_UUID,uuid);
+        return builder.queryForFirst();
     }
 
 }

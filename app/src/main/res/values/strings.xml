@@ -19,6 +19,10 @@
     <!-- TextView -->
     <string name="tv_pattern_init_tips">绘制解锁图案</string>
     <string name="tv_pattern_init_again">再次绘制解锁图案</string>
+    <string name="tv_item_pass_server_ip">服务端地址：</string>
+    <string name="tv_item_pass_server_port">端口号：</string>
+    <string name="tv_item_pass_server_account">&gt; 用户名：</string>
+    <string name="tv_item_pass_server_pass">&gt; 密码：_</string>
 
     <!-- Hint -->
     <string name="hint_pass_edit_title">标题</string>
@@ -64,6 +68,7 @@
     <string name="error_label_name_exists">标签已存在</string>
     <string name="error_cannot_query_from_null">无法从空条件开始查询</string>
     <string name="error_cannot_update_null">无法更新空对象</string>
+    <string name="error_query_failed">查询失败</string>
 
     <!--Dialog Title-->
     <string name="title_dialog_pass_edit_empty">温馨提示</string>

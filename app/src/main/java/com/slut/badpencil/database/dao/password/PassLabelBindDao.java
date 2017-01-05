@@ -40,7 +40,7 @@ public class PassLabelBindDao {
 
     public List<PassLabelBind> queryByPass(String uuid) throws SQLException {
         QueryBuilder<PassLabelBind, Integer> builder = dao.queryBuilder();
-        builder.where().eq(Password.Const.COLUMN_UUID, uuid);
+        builder.where().eq(PassLabelBind.Const.COLUMN_TITLE_PASS_UUID, uuid);
         return builder.query();
     }
 

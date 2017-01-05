@@ -5,4 +5,7 @@ package com.slut.badpencil.main.fragment.p;
  */
 
 public interface PassPresenter {
+
+    void loadMore(long pageNo,long pageSize);
+
 }

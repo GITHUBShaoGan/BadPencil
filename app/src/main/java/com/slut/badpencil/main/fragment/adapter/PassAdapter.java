@@ -4,17 +4,26 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.slut.badpencil.App;
 import com.slut.badpencil.R;
 import com.slut.badpencil.database.bean.password.PassLabel;
 import com.slut.badpencil.database.bean.password.Password;
+import com.slut.badpencil.database.bean.password.ServerPassword;
+import com.slut.badpencil.database.bean.password.WebsitePassword;
+import com.slut.badpencil.database.dao.password.ServerPasswordDao;
+import com.slut.badpencil.database.dao.password.WebsitePassDao;
+import com.slut.badpencil.utils.ImageLoadUtils;
 import com.slut.badpencil.widget.RoundedLetterView;
 
 import org.apmem.tools.layouts.FlowLayout;
 
+import java.io.File;
+import java.sql.SQLException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,6 +64,12 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case Password.Type.DEFAULT:
                 viewHolder = new OriginalViewHolder(LayoutInflater.from(App.getContext()).inflate(R.layout.item_pass_original, new LinearLayout(App.getContext()), false));
                 break;
+            case Password.Type.WEBSITE:
+                viewHolder = new WebsiteViewHolder(LayoutInflater.from(App.getContext()).inflate(R.layout.item_pass_website, new LinearLayout(App.getContext()), false));
+                break;
+            case Password.Type.SEVER:
+                viewHolder = new ServerViewHolder(LayoutInflater.from(App.getContext()).inflate(R.layout.item_pass_server, new LinearLayout(App.getContext()), false));
+                break;
         }
         return viewHolder;
     }
@@ -70,6 +85,30 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         originalViewHolder.title.setText(password.getTitle() + "");
                         originalViewHolder.account.setText(password.getAccount() + "");
                         originalViewHolder.letterView.setTitleText(password.getAccount().charAt(0) + "");
+                        break;
+                    case Password.Type.WEBSITE:
+                        WebsiteViewHolder websiteViewHolder = (WebsiteViewHolder) holder;
+                        websiteViewHolder.title.setText(password.getTitle() + "");
+                        websiteViewHolder.account.setText(password.getAccount() + "");
+                        try {
+                            WebsitePassword websitePassword = WebsitePassDao.getInstances().querySingle(password.getUuid());
+                            ImageLoader.getInstance().displayImage(websitePassword.getUrl() + File.separator + "favicon.ico", websiteViewHolder.icon, ImageLoadUtils.initWebsiteIconOption());
+                            websiteViewHolder.url.setText(websitePassword.getUrl() + "");
+                        } catch (SQLException e) {
+
+                        }
+                        break;
+                    case Password.Type.SEVER:
+                        ServerViewHolder serverViewHolder = (ServerViewHolder)holder;
+                        serverViewHolder.title.setText(password.getTitle()+"");
+                        serverViewHolder.account.setText(password.getAccount()+"");
+                        try{
+                            ServerPassword serverPassword = ServerPasswordDao.getInstances().querySingle(password.getUuid());
+                            serverViewHolder.ip.setText(serverPassword.getAddress()+"");
+                            serverViewHolder.port.setText(serverPassword.getPort()+"");
+                        }catch (SQLException e){
+
+                        }
                         break;
                 }
             }
@@ -94,18 +133,47 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.title)
-        TextView title;
-        @BindView(R.id.letter)
-        RoundedLetterView letterView;
-        @BindView(R.id.account)
-        TextView account;
-        @BindView(R.id.flowLayout)
-        FlowLayout flowLayout;
+        private TextView title;
+        private RoundedLetterView letterView;
+        private TextView account;
 
         public OriginalViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            title = (TextView) itemView.findViewById(R.id.title);
+            letterView = (RoundedLetterView) itemView.findViewById(R.id.letter);
+            account = (TextView) itemView.findViewById(R.id.account);
+        }
+    }
+
+    public class WebsiteViewHolder extends RecyclerView.ViewHolder {
+
+        private ImageView icon;
+        private TextView title;
+        private TextView url;
+        private TextView account;
+
+        public WebsiteViewHolder(View itemView) {
+            super(itemView);
+            icon = (ImageView)itemView.findViewById(R.id.icon);
+            title = (TextView) itemView.findViewById(R.id.title);
+            url = (TextView)itemView.findViewById(R.id.url);
+            account = (TextView) itemView.findViewById(R.id.account);
+        }
+    }
+
+    public class ServerViewHolder extends RecyclerView.ViewHolder{
+
+        private TextView title;
+        private TextView ip;
+        private TextView port;
+        private TextView account;
+
+        public ServerViewHolder(View itemView) {
+            super(itemView);
+            title = (TextView)itemView.findViewById(R.id.title);
+            ip = (TextView)itemView.findViewById(R.id.ip);
+            port = (TextView)itemView.findViewById(R.id.port);
+            account = (TextView)itemView.findViewById(R.id.account);
         }
     }
 

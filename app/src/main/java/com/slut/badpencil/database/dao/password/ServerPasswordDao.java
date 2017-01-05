@@ -1,6 +1,7 @@
 package com.slut.badpencil.database.dao.password;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.slut.badpencil.App;
 import com.slut.badpencil.database.bean.password.ServerPassword;
@@ -43,4 +44,9 @@ public class ServerPasswordDao {
         builder.update();
     }
 
+    public ServerPassword querySingle(String uuid)throws SQLException{
+        QueryBuilder<ServerPassword,Integer> builder = dao.queryBuilder();
+        builder.where().eq(ServerPassword.Const.COLUMN_PASS_UUID,uuid);
+        return builder.queryForFirst();
+    }
 }
