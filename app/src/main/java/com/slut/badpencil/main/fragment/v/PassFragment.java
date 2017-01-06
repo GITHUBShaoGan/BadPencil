@@ -1,6 +1,7 @@
 package com.slut.badpencil.main.fragment.v;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,6 +18,7 @@ import com.slut.badpencil.database.bean.password.Password;
 import com.slut.badpencil.main.fragment.adapter.PassAdapter;
 import com.slut.badpencil.main.fragment.p.PassPresenter;
 import com.slut.badpencil.main.fragment.p.PassPresenterImpl;
+import com.slut.badpencil.password.show.server.v.PassServerActivity;
 import com.slut.badpencil.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PassFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,PassView{
+public class PassFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, PassView, PassAdapter.OnItemClickListener {
 
     @BindView(R.id.refresh)
     SwipeRefreshLayout refreshLayout;
@@ -45,9 +47,9 @@ public class PassFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private long pageNo = 1;//分页加载页码
 
     public static PassFragment getInstances() {
-        if(instances == null){
-            synchronized (PassFragment.class){
-                if(instances == null){
+        if (instances == null) {
+            synchronized (PassFragment.class) {
+                if (instances == null) {
                     instances = new PassFragment();
                 }
             }
@@ -64,27 +66,28 @@ public class PassFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if(rootView == null){
-            rootView = inflater.inflate(R.layout.fragment_pass,container,false);
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_pass, container, false);
         }
-        ButterKnife.bind(this,rootView);
+        ButterKnife.bind(this, rootView);
         initView();
-        ViewGroup parent = (ViewGroup)rootView.getParent();
-        if(parent!=null){
+        ViewGroup parent = (ViewGroup) rootView.getParent();
+        if (parent != null) {
             parent.removeView(rootView);
         }
         return rootView;
     }
 
-    private void initView(){
+    private void initView() {
         presenter = new PassPresenterImpl(this);
-        refreshLayout.setColorSchemeResources(R.color.colorGoogleRed,R.color.colorGoogleGreen);
+        refreshLayout.setColorSchemeResources(R.color.colorGoogleRed, R.color.colorGoogleGreen);
 
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new PassAdapter();
         adapter.setPasswordList(new ArrayList<Password>());
         adapter.setPassLabelLists(new ArrayList<List<PassLabel>>());
+        adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
 
         refreshLayout.setOnRefreshListener(this);
@@ -107,8 +110,8 @@ public class PassFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onLoadSuccess(int type, List<Password> passwordList, List<List<PassLabel>> passlabelLists) {
-        adapter.getPasswordList().addAll(0,passwordList);
-        adapter.getPassLabelLists().addAll(0,passlabelLists);
+        adapter.getPasswordList().addAll(0, passwordList);
+        adapter.getPassLabelLists().addAll(0, passlabelLists);
         adapter.notifyDataSetChanged();
 
         refreshLayout.setRefreshing(false);
@@ -117,5 +120,19 @@ public class PassFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onLoadError(String msg) {
         ToastUtils.showShort(msg);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        if (adapter != null && adapter.getPasswordList() != null && position < adapter.getPasswordList().size()) {
+            Password password = adapter.getPasswordList().get(position);
+            switch (password.getType()){
+                case Password.Type.SEVER:
+                    Intent intent = new Intent(getActivity(), PassServerActivity.class);
+                    intent.putExtra(PassServerActivity.EXTRA_PASSWORD,password.getUuid());
+                    startActivity(intent);
+                    break;
+            }
+        }
     }
 }

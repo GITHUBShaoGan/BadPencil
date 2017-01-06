@@ -37,6 +37,11 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Password> passwordList;
     private List<List<PassLabel>> passLabelLists;
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public PassAdapter() {
     }
@@ -75,7 +80,7 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (passwordList != null && position < passwordList.size()) {
             Password password = passwordList.get(position);
             if (password != null) {
@@ -99,18 +104,24 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         }
                         break;
                     case Password.Type.SEVER:
-                        ServerViewHolder serverViewHolder = (ServerViewHolder)holder;
-                        serverViewHolder.title.setText(password.getTitle()+"");
-                        serverViewHolder.account.setText(password.getAccount()+"");
-                        try{
+                        ServerViewHolder serverViewHolder = (ServerViewHolder) holder;
+                        serverViewHolder.title.setText(password.getTitle() + "");
+                        serverViewHolder.account.setText(password.getAccount() + "");
+                        try {
                             ServerPassword serverPassword = ServerPasswordDao.getInstances().querySingle(password.getUuid());
-                            serverViewHolder.ip.setText(serverPassword.getAddress()+"");
-                            serverViewHolder.port.setText(serverPassword.getPort()+"");
-                        }catch (SQLException e){
+                            serverViewHolder.ip.setText(serverPassword.getAddress() + "");
+                            serverViewHolder.port.setText(serverPassword.getPort() + "");
+                        } catch (SQLException e) {
 
                         }
                         break;
                 }
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onItemClickListener.onItemClick(v, position);
+                    }
+                });
             }
         }
     }
@@ -154,14 +165,14 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public WebsiteViewHolder(View itemView) {
             super(itemView);
-            icon = (ImageView)itemView.findViewById(R.id.icon);
+            icon = (ImageView) itemView.findViewById(R.id.icon);
             title = (TextView) itemView.findViewById(R.id.title);
-            url = (TextView)itemView.findViewById(R.id.url);
+            url = (TextView) itemView.findViewById(R.id.url);
             account = (TextView) itemView.findViewById(R.id.account);
         }
     }
 
-    public class ServerViewHolder extends RecyclerView.ViewHolder{
+    public class ServerViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title;
         private TextView ip;
@@ -170,11 +181,16 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public ServerViewHolder(View itemView) {
             super(itemView);
-            title = (TextView)itemView.findViewById(R.id.title);
-            ip = (TextView)itemView.findViewById(R.id.ip);
-            port = (TextView)itemView.findViewById(R.id.port);
-            account = (TextView)itemView.findViewById(R.id.account);
+            title = (TextView) itemView.findViewById(R.id.title);
+            ip = (TextView) itemView.findViewById(R.id.ip);
+            port = (TextView) itemView.findViewById(R.id.port);
+            account = (TextView) itemView.findViewById(R.id.account);
         }
     }
 
+    public interface OnItemClickListener {
+
+        void onItemClick(View view, int position);
+
+    }
 }

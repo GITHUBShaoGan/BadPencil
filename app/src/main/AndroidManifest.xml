@@ -20,8 +20,8 @@
             android:label="@string/app_name" />
         <activity
             android:name=".master.pattern.v.PatternInitActivity"
-            android:theme="@style/AppTheme.WithActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,7 +36,8 @@
         <activity android:name=".password.edit.wifi.list.WifiListActivity" />
         <activity
             android:name=".password.label.v.LabelActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".password.show.server.v.PassServerActivity"></activity>
     </application>
 
 </manifest>

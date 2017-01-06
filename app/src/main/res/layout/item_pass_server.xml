@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tv_item_pass_server_ip" />
+                android:text="@string/tv_pass_server_ip" />
 
             <TextView
                 android:id="@+id/ip"
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:text="@string/tv_item_pass_server_port" />
+                android:text="@string/tv_pass_server_port" />
 
             <TextView
                 android:id="@+id/port"
@@ -78,7 +78,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tv_item_pass_server_account" />
+                android:text="@string/tv_pass_server_account" />
 
             <TextView
                 android:id="@+id/account"

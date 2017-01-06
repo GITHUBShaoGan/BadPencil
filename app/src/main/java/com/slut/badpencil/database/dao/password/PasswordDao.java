@@ -77,4 +77,9 @@ public class PasswordDao {
         builder.limit(pageSize);
         return builder.query();
     }
+    public Password querySingle(String uuid)throws SQLException{
+        QueryBuilder<Password,Integer> builder = dao.queryBuilder();
+        builder.where().eq(Password.Const.COLUMN_UUID,uuid);
+        return builder.queryForFirst();
+    }
 }
