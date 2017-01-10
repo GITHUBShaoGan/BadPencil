@@ -8,11 +8,11 @@ import com.slut.badpencil.database.bean.password.Password;
  * Created by 七月在线科技 on 2016/12/29.
  */
 @DatabaseTable
-public class WebsitePassword extends Password{
+public class WebsitePassword extends Password {
 
-    public class Const{
+    public class Const {
         public static final String COLUMN_PASS_UUID = "passUuid";
-        public static final String COLUMN_URL =  "url";
+        public static final String COLUMN_URL = "url";
     }
 
     @DatabaseField(id = true)
@@ -44,5 +44,19 @@ public class WebsitePassword extends Password{
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public WebsitePassword appendFullPass(Password password) {
+        if (password != null) {
+            this.setUuid(password.getUuid());
+            this.setUpdateStamp(password.getUpdateStamp());
+            this.setCreateStamp(password.getCreateStamp());
+            this.setRemark(password.getRemark());
+            this.setAccount(password.getAccount());
+            this.setPassword(password.getPassword());
+            this.setTitle(password.getTitle());
+            this.setType(Type.SERVER);
+        }
+        return this;
     }
 }

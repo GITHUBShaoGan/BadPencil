@@ -24,11 +24,13 @@ import android.widget.TextView;
 import com.slut.badpencil.R;
 import com.slut.badpencil.config.AppConfig;
 import com.slut.badpencil.database.bean.password.PassLabel;
+import com.slut.badpencil.database.bean.password.Password;
 import com.slut.badpencil.database.bean.password.WebsitePassword;
 import com.slut.badpencil.notification.subject.PasswordSubject;
 import com.slut.badpencil.password.edit.website.p.WebsiteEditPresenter;
 import com.slut.badpencil.password.edit.website.p.WebsiteEditPresenterImpl;
 import com.slut.badpencil.password.label.v.LabelActivity;
+import com.slut.badpencil.rsa.RSAUtils;
 import com.slut.badpencil.utils.ResUtils;
 import com.slut.badpencil.utils.SPUtils;
 import com.slut.badpencil.utils.ToastUtils;
@@ -64,11 +66,12 @@ public class WebsiteEditActivity extends AppCompatActivity implements WebsiteEdi
     @BindView(R.id.flowLayout)
     FlowLayout flowLayout;
 
+    private String primaryUUID = null;
     private WebsitePassword primaryPassword;
     private ArrayList<PassLabel> primaryLabelArrayList;
     private ArrayList<PassLabel> extraPassLabelArrayList;
 
-    private static final String EXTRA_WEBSITE_PASSWORD = "website_password";
+    public static final String EXTRA_WEBSITE_PASSWORD = "website_password";
     private static final int REQUEST_SET_LABELS = 2020;
 
     private WebsiteEditPresenter presenter;
@@ -93,8 +96,8 @@ public class WebsiteEditActivity extends AppCompatActivity implements WebsiteEdi
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.hasExtra(EXTRA_WEBSITE_PASSWORD)) {
-                primaryPassword = intent.getParcelableExtra(EXTRA_WEBSITE_PASSWORD);
-                presenter.queryLabels(primaryPassword);
+                primaryUUID = intent.getStringExtra(EXTRA_WEBSITE_PASSWORD);
+                presenter.queryLabels(primaryUUID);
             }
         }
     }
@@ -247,8 +250,9 @@ public class WebsiteEditActivity extends AppCompatActivity implements WebsiteEdi
     }
 
     @Override
-    public void onQuerySuccess(List<PassLabel> passLabelList) {
+    public void onQuerySuccess(Password password, WebsitePassword websitePassword, List<PassLabel> passLabelList) {
         flowLayout.removeAllViews();
+        primaryPassword = websitePassword.appendFullPass(password);
         extraPassLabelArrayList = new ArrayList<>(passLabelList);
         primaryLabelArrayList = new ArrayList<>(passLabelList);
         for (PassLabel passLabel : extraPassLabelArrayList) {
@@ -257,6 +261,12 @@ public class WebsiteEditActivity extends AppCompatActivity implements WebsiteEdi
             textView.setText(passLabel.getName() + "");
             flowLayout.addView(view);
         }
+
+        title.setText(password.getTitle());
+        account.setText(password.getAccount());
+        this.password.setText(RSAUtils.decrypt(password.getPassword()));
+        url.setText(websitePassword.getUrl());
+        remark.setText(password.getRemark());
     }
 
     @Override

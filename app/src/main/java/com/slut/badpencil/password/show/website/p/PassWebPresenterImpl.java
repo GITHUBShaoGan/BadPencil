@@ -13,7 +13,7 @@ import java.util.List;
  * Created by shijianan on 2017/1/10.
  */
 
-public class PassWebPresenterImpl implements PassWebPresenter, PassWebModel.OnQueryListener {
+public class PassWebPresenterImpl implements PassWebPresenter, PassWebModel.OnQueryListener,PassWebModel.OnDeleteListener {
 
     private PassWebModel passWebModel;
     private PassWebView passWebView;
@@ -36,5 +36,20 @@ public class PassWebPresenterImpl implements PassWebPresenter, PassWebModel.OnQu
     @Override
     public void query(String uuid) {
         passWebModel.query(uuid, this);
+    }
+
+    @Override
+    public void delete(String uuid) {
+        passWebModel.delete(uuid,this);
+    }
+
+    @Override
+    public void onDeleteSuccess(String uuid) {
+        passWebView.onDeleteSuccess(uuid);
+    }
+
+    @Override
+    public void onDeleteError(String msg) {
+        passWebView.onDeleteError(msg);
     }
 }

@@ -25,8 +25,8 @@ public class WebsiteEditPresenterImpl implements WebsiteEditPresenter, WebsiteEd
     }
 
     @Override
-    public void onQuerySuccess(List<PassLabel> passLabelList) {
-        websiteEditView.onQuerySuccess(passLabelList);
+    public void onQuerySuccess(Password password,WebsitePassword websitePassword,List<PassLabel> passLabelList) {
+        websiteEditView.onQuerySuccess(password,websitePassword,passLabelList);
     }
 
     @Override
@@ -35,8 +35,8 @@ public class WebsiteEditPresenterImpl implements WebsiteEditPresenter, WebsiteEd
     }
 
     @Override
-    public void queryLabels(WebsitePassword websitePassword) {
-        websiteEditModel.queryLabels(websitePassword, this);
+    public void queryLabels(String uuid) {
+        websiteEditModel.queryLabels(uuid, this);
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public interface WebsiteEditPresenter {
 
-    void queryLabels(WebsitePassword websitePassword);
+    void queryLabels(String uuid);
 
     void checkUI(WebsitePassword primaryPassword, String title, String account, String password, String url, String remark, ArrayList<PassLabel> passLabelArrayList, ArrayList<PassLabel> primaryLabelList);
 

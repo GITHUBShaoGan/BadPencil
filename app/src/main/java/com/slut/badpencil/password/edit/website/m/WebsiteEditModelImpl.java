@@ -28,20 +28,24 @@ import java.util.UUID;
 public class WebsiteEditModelImpl implements WebsiteEditModel {
 
     @Override
-    public void queryLabels(WebsitePassword websitePassword, OnQueryLabelsListener onQueryLabelsListener) {
-        if (websitePassword == null) {
+    public void queryLabels(String uuid, OnQueryLabelsListener onQueryLabelsListener) {
+        if (TextUtils.isEmpty(uuid)) {
             onQueryLabelsListener.onQueryError(ResUtils.getString(R.string.error_cannot_query_from_null));
             return;
         }
+        Password password = null;
+        WebsitePassword websitePassword = null;
         List<PassLabelBind> passLabelBindList = null;
         try {
-            passLabelBindList = PassLabelBindDao.getInstances().queryByPass(websitePassword.getUuid());
+            password = PasswordDao.getInstances().querySingle(uuid);
+            websitePassword = WebsitePassDao.getInstances().querySingle(uuid);
+            passLabelBindList = PassLabelBindDao.getInstances().queryByPass(uuid);
             List<PassLabel> passLabelList = new ArrayList<>();
             for (PassLabelBind passLabelBind : passLabelBindList) {
                 PassLabel passLabel = PassLabelDao.getInstances().queryByUUID(passLabelBind.getLabelUuid());
                 passLabelList.add(passLabel);
             }
-            onQueryLabelsListener.onQuerySuccess(passLabelList);
+            onQueryLabelsListener.onQuerySuccess(password, websitePassword, passLabelList);
         } catch (SQLException e) {
             if (e != null && !TextUtils.isEmpty(e.getLocalizedMessage())) {
                 onQueryLabelsListener.onQueryError(e.getLocalizedMessage());
@@ -108,6 +112,8 @@ public class WebsiteEditModelImpl implements WebsiteEditModel {
                         onCheckUIListener.onInputInvalid();
                     }
                 }
+            }else{
+                onCheckUIListener.onUIChange();
             }
         }
     }

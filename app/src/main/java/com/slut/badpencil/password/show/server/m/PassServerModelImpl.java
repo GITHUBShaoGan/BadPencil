@@ -76,6 +76,7 @@ public class PassServerModelImpl implements PassServerModel {
         try {
             PasswordDao.getInstances().deleteSingle(uuid);
             PassLabelBindDao.getInstances().deleteByPasswordUUID(uuid);
+            ServerPasswordDao.getInstances().deleteSingle(uuid);
             onDeleteListener.onDeleteSuccess(uuid);
         } catch (SQLException e) {
             onDeleteListener.onDeleteError(e.getLocalizedMessage());

@@ -8,4 +8,6 @@ public interface PassWebPresenter {
 
     void query(String uuid);
 
+    void delete(String uuid);
+
 }

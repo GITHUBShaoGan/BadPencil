@@ -22,4 +22,13 @@ public interface PassWebModel {
 
     void query(String uuid,OnQueryListener onQueryListener);
 
+    interface OnDeleteListener{
+
+        void onDeleteSuccess(String uuid);
+
+        void onDeleteError(String msg);
+
+    }
+
+    void delete(String uuid,OnDeleteListener onDeleteListener);
 }

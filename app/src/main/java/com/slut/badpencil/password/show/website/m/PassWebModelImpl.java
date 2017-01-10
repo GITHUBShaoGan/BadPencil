@@ -11,6 +11,7 @@ import com.slut.badpencil.database.dao.password.PassLabelBindDao;
 import com.slut.badpencil.database.dao.password.PassLabelDao;
 import com.slut.badpencil.database.dao.password.PasswordDao;
 import com.slut.badpencil.database.dao.password.WebsitePassDao;
+import com.slut.badpencil.password.show.server.m.PassServerModel;
 import com.slut.badpencil.utils.ResUtils;
 
 import java.sql.SQLException;
@@ -43,6 +44,22 @@ public class PassWebModelImpl implements PassWebModel {
             onQueryListener.onQuerySuccess(password, websitePassword, passLabelList);
         } catch (SQLException e) {
             onQueryListener.onQueryError(e.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void delete(String uuid, OnDeleteListener onDeleteListener) {
+        if (TextUtils.isEmpty(uuid)) {
+            onDeleteListener.onDeleteError(ResUtils.getString(R.string.error_cannot_delete_null));
+            return;
+        }
+        try {
+            PasswordDao.getInstances().deleteSingle(uuid);
+            PassLabelBindDao.getInstances().deleteByPasswordUUID(uuid);
+            WebsitePassDao.getInstances().deleteSingle(uuid);
+            onDeleteListener.onDeleteSuccess(uuid);
+        } catch (SQLException e) {
+            onDeleteListener.onDeleteError(e.getLocalizedMessage());
         }
     }
 

@@ -1,6 +1,7 @@
 package com.slut.badpencil.password.edit.website.v;
 
 import com.slut.badpencil.database.bean.password.PassLabel;
+import com.slut.badpencil.database.bean.password.Password;
 import com.slut.badpencil.database.bean.password.WebsitePassword;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public interface WebsiteEditView {
 
-    void onQuerySuccess(List<PassLabel> passLabelList);
+    void onQuerySuccess(Password password, WebsitePassword websitePassword,List<PassLabel> passLabelList);
 
     void onQueryError(String msg);
 

@@ -16,4 +16,8 @@ public interface PassWebView {
 
     void onQueryError(String msg);
 
+    void onDeleteSuccess(String uuid);
+
+    void onDeleteError(String msg);
+
 }

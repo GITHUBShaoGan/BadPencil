@@ -15,12 +15,12 @@ public interface WebsiteEditModel {
 
     interface OnQueryLabelsListener {
 
-        void onQuerySuccess(List<PassLabel> passLabelList);
+        void onQuerySuccess(Password password,WebsitePassword websitePassword,List<PassLabel> passLabelList);
 
         void onQueryError(String msg);
     }
 
-    void queryLabels(WebsitePassword websitePassword, OnQueryLabelsListener onQueryLabelsListener);
+    void queryLabels(String uuid, OnQueryLabelsListener onQueryLabelsListener);
 
     interface OnCheckUIListener {
 

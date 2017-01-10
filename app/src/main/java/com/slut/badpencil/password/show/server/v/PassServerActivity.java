@@ -1,6 +1,8 @@
 package com.slut.badpencil.password.show.server.v;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.slut.badpencil.R;
+import com.slut.badpencil.config.AppConfig;
 import com.slut.badpencil.database.bean.password.PassLabel;
 import com.slut.badpencil.database.bean.password.Password;
 import com.slut.badpencil.database.bean.password.ServerPassword;
@@ -21,6 +25,7 @@ import com.slut.badpencil.password.edit.server.v.ServerEditActivity;
 import com.slut.badpencil.password.show.server.p.PassServerPresenter;
 import com.slut.badpencil.password.show.server.p.PassServerPresenterImpl;
 import com.slut.badpencil.rsa.RSAUtils;
+import com.slut.badpencil.utils.SPUtils;
 import com.slut.badpencil.utils.TimeUtils;
 import com.slut.badpencil.utils.ToastUtils;
 
@@ -166,10 +171,43 @@ public class PassServerActivity extends AppCompatActivity implements PassServerV
                 startActivity(intent);
                 break;
             case R.id.delete:
-                presenter.delete(uuid);
+                delete();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void delete() {
+        boolean isShow = (Boolean) SPUtils.get(AppConfig.SPConfig.FILE_NAME, AppConfig.SPConfig.SHOW_DIALOG_PASS_DELETE, true);
+        if (isShow) {
+            View childView = LayoutInflater.from(this).inflate(R.layout.view_dialog_text_with_cb, new LinearLayout(this), false);
+            TextView textView = (TextView) childView.findViewById(R.id.msg);
+            final CheckBox checkBox = (CheckBox) childView.findViewById(R.id.checkbox);
+            textView.setText(R.string.msg_dialog_pass_delete_single);
+            checkBox.setText(R.string.cb_never_show_again);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setIcon(R.drawable.ic_warning_amber_24dp);
+            builder.setTitle(R.string.title_dialog_tips);
+            builder.setView(childView);
+            builder.setPositiveButton(R.string.action_dialog_ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //sharepreference记录下下次是否显示状态
+                    SPUtils.put(AppConfig.SPConfig.FILE_NAME, AppConfig.SPConfig.SHOW_DIALOG_PASS_DELETE, !checkBox.isChecked());
+                    presenter.delete(uuid);
+                }
+            });
+            builder.setNegativeButton(R.string.action_dialog_cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+            presenter.delete(uuid);
+        }
     }
 
 }

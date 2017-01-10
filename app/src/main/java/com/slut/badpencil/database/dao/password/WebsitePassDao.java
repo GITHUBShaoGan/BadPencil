@@ -1,6 +1,7 @@
 package com.slut.badpencil.database.dao.password;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.slut.badpencil.App;
@@ -37,17 +38,23 @@ public class WebsitePassDao {
         dao.create(websitePassword);
     }
 
-    public void updateSingle(String uuid,String url)throws SQLException{
-        UpdateBuilder<WebsitePassword,Integer> builder = dao.updateBuilder();
-        builder.where().eq(WebsitePassword.Const.COLUMN_PASS_UUID,uuid);
-        builder.updateColumnValue(WebsitePassword.Const.COLUMN_URL,url);
+    public void updateSingle(String uuid, String url) throws SQLException {
+        UpdateBuilder<WebsitePassword, Integer> builder = dao.updateBuilder();
+        builder.where().eq(WebsitePassword.Const.COLUMN_PASS_UUID, uuid);
+        builder.updateColumnValue(WebsitePassword.Const.COLUMN_URL, url);
         builder.update();
     }
 
-    public WebsitePassword querySingle(String uuid)throws SQLException{
-        QueryBuilder<WebsitePassword,Integer> builder = dao.queryBuilder();
-        builder.where().eq(WebsitePassword.Const.COLUMN_PASS_UUID,uuid);
+    public WebsitePassword querySingle(String uuid) throws SQLException {
+        QueryBuilder<WebsitePassword, Integer> builder = dao.queryBuilder();
+        builder.where().eq(WebsitePassword.Const.COLUMN_PASS_UUID, uuid);
         return builder.queryForFirst();
+    }
+
+    public void deleteSingle(String uuid) throws SQLException {
+        DeleteBuilder<WebsitePassword, Integer> builder = dao.deleteBuilder();
+        builder.where().eq(WebsitePassword.Const.COLUMN_PASS_UUID, uuid);
+        builder.delete();
     }
 
 }
