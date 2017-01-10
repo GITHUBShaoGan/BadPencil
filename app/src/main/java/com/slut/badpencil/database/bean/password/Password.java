@@ -59,7 +59,7 @@ public class Password implements Parcelable {
         public static final int DEFAULT = 0;
         public static final int WEBSITE = 1;
         public static final int BANK = 2;
-        public static final int SEVER = 3;
+        public static final int SERVER = 3;
         public static final int WIFI = 4;
     }
 
@@ -167,5 +167,19 @@ public class Password implements Parcelable {
 
     public void setUpdateStamp(long updateStamp) {
         this.updateStamp = updateStamp;
+    }
+
+    @Override
+    public String toString() {
+        return "Password{" +
+                "uuid='" + uuid + '\'' +
+                ", title='" + title + '\'' +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", remark='" + remark + '\'' +
+                ", type=" + type +
+                ", createStamp=" + createStamp +
+                ", updateStamp=" + updateStamp +
+                '}';
     }
 }

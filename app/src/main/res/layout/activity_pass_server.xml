@@ -31,157 +31,161 @@
             tools:context="com.slut.badpencil.password.show.server.v.PassServerActivity">
 
             <LinearLayout
-                android:padding="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="@string/tv_pass_server_ip" />
+                    android:text="@string/tv_pass_server_ip"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/ip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:text="@string/tv_pass_server_ip"
                     android:textColor="@color/colorPrimaryBlack"
-                    android:text="@string/tv_pass_server_ip" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:textSize="16sp"
-                    android:text="@string/tv_pass_server_port" />
+                    android:text="@string/tv_pass_server_port"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/port"
-                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/tv_pass_server_ip"
                     android:textColor="@color/colorPrimaryBlack"
-                    android:text="@string/tv_pass_server_ip" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
                 android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="16dp">
 
                 <TextView
-                    android:text="@string/tv_pass_server_account"
                     android:layout_width="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_pass_server_account"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/account"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryBlack"
-                    android:textSize="16sp"
-                    android:layout_height="wrap_content" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:padding="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="16dp">
 
                 <TextView
-                    android:text="@string/tv_pass_server_pass"
                     android:layout_width="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_pass_server_pass"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/password"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryBlack"
-                    android:textSize="16sp"
-                    android:layout_height="wrap_content" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:padding="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="16dp">
 
                 <TextView
-                    android:text="@string/tv_pass_server_remark"
                     android:layout_width="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_pass_server_remark"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/remark"
-                    android:textColor="@color/colorPrimaryBlack"
-                    android:textSize="16sp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryBlack"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:padding="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="16dp">
 
                 <TextView
-                    android:text="@string/tv_pass_server_create_time"
                     android:layout_width="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_pass_server_create_time"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/create"
-                    android:textColor="@color/colorPrimaryBlack"
-                    android:textSize="16sp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryBlack"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:padding="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="16dp">
 
                 <TextView
-                    android:text="@string/tv_pass_server_update_time"
                     android:layout_width="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_pass_server_update_time"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/update"
-                    android:textColor="@color/colorPrimaryBlack"
-                    android:textSize="16sp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryBlack"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
             <org.apmem.tools.layouts.FlowLayout
                 android:id="@+id/flowLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></org.apmem.tools.layouts.FlowLayout>
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                app:layoutDirection="rtl"></org.apmem.tools.layouts.FlowLayout>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

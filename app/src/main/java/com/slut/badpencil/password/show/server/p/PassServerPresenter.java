@@ -8,4 +8,6 @@ public interface PassServerPresenter {
 
     void query(String uuid);
 
+    void delete(String uuid);
+
 }

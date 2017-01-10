@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public interface ServerEditPresenter {
 
-    void queryLabel(ServerPassword serverPassword);
+    void queryLabel(String uuid);
 
     void checkUI(ServerPassword primaryPassword, String title, String address, String port, String account, String password, String remark, ArrayList<PassLabel> primaryLabels, ArrayList<PassLabel> extraLabels);
 

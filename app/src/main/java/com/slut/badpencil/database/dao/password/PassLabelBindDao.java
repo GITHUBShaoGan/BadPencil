@@ -49,4 +49,5 @@ public class PassLabelBindDao {
         builder.where().eq(PassLabelBind.Const.COLUMN_TITLE_PASS_UUID,uuid);
         builder.delete();
     }
+
 }

@@ -55,4 +55,18 @@ public class ServerPassword extends Password{
     public void setPort(int port) {
         this.port = port;
     }
+
+    public ServerPassword appendFullPass(Password password){
+        if(password!=null) {
+            this.setUuid(password.getUuid());
+            this.setUpdateStamp(password.getUpdateStamp());
+            this.setCreateStamp(password.getCreateStamp());
+            this.setRemark(password.getRemark());
+            this.setAccount(password.getAccount());
+            this.setPassword(password.getPassword());
+            this.setTitle(password.getTitle());
+            this.setType(Type.SERVER);
+        }
+        return this;
+    }
 }

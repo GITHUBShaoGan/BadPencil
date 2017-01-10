@@ -21,4 +21,33 @@ public interface PassModel {
 
     void loadMore(long pageNo,long pageSize,OnLoadMoreListener onLoadMoreListener);
 
+    interface OnNotifyItemChangeListener{
+
+        void notifyItemChangeSuccess(int position,Password password,List<PassLabel> passLabelList);
+
+        void notifyItemChangeError(String msg);
+
+    }
+
+    void notifyItemChanged(String uuid,List<Password> passwordList,OnNotifyItemChangeListener onNotifyItemChangeListener);
+
+    interface OnNotifyItemInsertListener{
+
+        void notifyItemInsertSuccess(Password password,List<PassLabel> passLabelList);
+
+        void notifyItemInsertError(String msg);
+
+    }
+
+    void notifyItemInsert(String uuid,OnNotifyItemInsertListener onNotifyItemInsertListener);
+
+    interface OnNotifyItemRemoveListener{
+
+        void notifyItemRemoveSuccess(int position);
+
+        void notifyItemRemoveError(String msg);
+
+    }
+
+    void notifyItemRemove(String uuid,List<Password> passwordList,OnNotifyItemRemoveListener onNotifyItemRemoveListener);
 }

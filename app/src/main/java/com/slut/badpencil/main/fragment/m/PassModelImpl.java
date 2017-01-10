@@ -60,7 +60,7 @@ public class PassModelImpl implements PassModel {
                     passLabelLists.add(passLabels);
                 }
             } catch (SQLException e) {
-                for (int i=0;i<passwordList.size();i++){
+                for (int i = 0; i < passwordList.size(); i++) {
                     passLabelLists.add(new ArrayList<PassLabel>());
                 }
             }
@@ -71,6 +71,88 @@ public class PassModelImpl implements PassModel {
             }
         } else {
             onLoadMoreListener.onLoadError(ResUtils.getString(R.string.error_query_failed));
+        }
+    }
+
+    @Override
+    public void notifyItemChanged(String uuid, List<Password> passwordList, OnNotifyItemChangeListener onNotifyItemChangeListener) {
+        if (TextUtils.isEmpty(uuid)) {
+            onNotifyItemChangeListener.notifyItemChangeError(ResUtils.getString(R.string.error_cannot_query_from_null));
+            return;
+        }
+        if (passwordList == null || passwordList.isEmpty()) {
+            onNotifyItemChangeListener.notifyItemChangeError(ResUtils.getString(R.string.error_cannot_query_from_null));
+            return;
+        }
+        int position = -1;
+        for (int i = 0; i < passwordList.size(); i++) {
+            if (passwordList.get(i).getUuid().equals(uuid)) {
+                position = i;
+                break;
+            }
+        }
+        if (position == -1) {
+            onNotifyItemChangeListener.notifyItemChangeError(ResUtils.getString(R.string.error_query_failed));
+        } else {
+            Password password = null;
+            List<PassLabel> passLabelList = new ArrayList<>();
+            try {
+                password = PasswordDao.getInstances().querySingle(uuid);
+                List<PassLabelBind> passLabelBindList = null;
+                passLabelBindList = PassLabelBindDao.getInstances().queryByPass(uuid);
+                for (PassLabelBind passLabelBind : passLabelBindList) {
+                    PassLabel passLabel = PassLabelDao.getInstances().queryByUUID(passLabelBind.getLabelUuid());
+                    passLabelList.add(passLabel);
+                }
+            } catch (SQLException e) {
+                onNotifyItemChangeListener.notifyItemChangeError(e.getLocalizedMessage());
+                return;
+            }
+            onNotifyItemChangeListener.notifyItemChangeSuccess(position, password, passLabelList);
+        }
+    }
+
+    @Override
+    public void notifyItemInsert(String uuid, OnNotifyItemInsertListener onNotifyItemInsertListener) {
+        if (TextUtils.isEmpty(uuid)) {
+            onNotifyItemInsertListener.notifyItemInsertError(ResUtils.getString(R.string.error_cannot_query_from_null));
+            return;
+        }
+        try {
+            Password password = PasswordDao.getInstances().querySingle(uuid);
+            List<PassLabel> passLabelList = new ArrayList<>();
+            List<PassLabelBind> passLabelBindList = PassLabelBindDao.getInstances().queryByPass(uuid);
+            for (PassLabelBind passLabelBind : passLabelBindList) {
+                PassLabel passLabel = PassLabelDao.getInstances().queryByUUID(passLabelBind.getLabelUuid());
+                passLabelList.add(passLabel);
+            }
+            onNotifyItemInsertListener.notifyItemInsertSuccess(password, passLabelList);
+        } catch (SQLException e) {
+            onNotifyItemInsertListener.notifyItemInsertError(e.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void notifyItemRemove(String uuid, List<Password> passwordList, OnNotifyItemRemoveListener onNotifyItemRemoveListener) {
+        if (TextUtils.isEmpty(uuid)) {
+            onNotifyItemRemoveListener.notifyItemRemoveError(ResUtils.getString(R.string.error_cannot_query_from_null));
+            return;
+        }
+        if (passwordList == null || passwordList.isEmpty()) {
+            onNotifyItemRemoveListener.notifyItemRemoveError(ResUtils.getString(R.string.error_cannot_query_from_null));
+            return;
+        }
+        int position = -1;
+        for (int i = 0; i < passwordList.size(); i++) {
+            if (passwordList.get(i).getUuid().equals(uuid)) {
+                position = i;
+                break;
+            }
+        }
+        if (position == -1) {
+            onNotifyItemRemoveListener.notifyItemRemoveError(ResUtils.getString(R.string.error_query_failed));
+        } else {
+            onNotifyItemRemoveListener.notifyItemRemoveSuccess(position);
         }
     }
 

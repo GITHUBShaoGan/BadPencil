@@ -1,6 +1,7 @@
 package com.slut.badpencil.password.edit.server.m;
 
 import com.slut.badpencil.database.bean.password.PassLabel;
+import com.slut.badpencil.database.bean.password.Password;
 import com.slut.badpencil.database.bean.password.ServerPassword;
 
 import java.util.ArrayList;
@@ -12,15 +13,15 @@ import java.util.List;
 
 public interface ServerEditModel {
 
-    interface OnQueryLabelListener{
+    interface OnQueryListener {
 
-        void onQuerySuccess(List<PassLabel> passLabelList);
+        void onQuerySuccess(Password password,ServerPassword serverPassword,List<PassLabel> passLabelList);
 
         void onQueryError(String msg);
 
     }
 
-    void queryLabel(ServerPassword serverPassword,OnQueryLabelListener onQueryLabelListener);
+    void query(String uuid, OnQueryListener onQueryListener);
 
 
     interface OnCheckUIListener{

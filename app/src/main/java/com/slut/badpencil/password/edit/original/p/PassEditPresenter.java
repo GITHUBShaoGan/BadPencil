@@ -15,7 +15,7 @@ public interface PassEditPresenter {
 
     void checkUI(Password primaryPassword, String title, String account, String password, String remark,ArrayList<PassLabel> passLabels,ArrayList<PassLabel> primaryPassLabels);
 
-    void queryLabels(Password password);
+    void queryLabels(String uuid);
 
     void update(Password password,String title,String account,String pass,String remark,ArrayList<PassLabel> passLabelArrayList);
 

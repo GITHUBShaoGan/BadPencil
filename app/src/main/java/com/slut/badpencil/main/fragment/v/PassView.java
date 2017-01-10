@@ -15,4 +15,20 @@ public interface PassView {
 
     void onLoadError(String msg);
 
+
+    void notifyItemChangeSuccess(int position, Password password, List<PassLabel> passLabelList);
+
+    void notifyItemChangeError(String msg);
+
+
+    void notifyItemInsertSuccess(Password password,List<PassLabel> passLabelList);
+
+    void notifyItemInsertError(String msg);
+
+
+    void notifyItemRemoveSuccess(int position);
+
+    void notifyItemRemoveError(String msg);
+
+
 }

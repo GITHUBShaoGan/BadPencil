@@ -25,9 +25,11 @@ import com.slut.badpencil.R;
 import com.slut.badpencil.config.AppConfig;
 import com.slut.badpencil.database.bean.password.PassLabel;
 import com.slut.badpencil.database.bean.password.Password;
+import com.slut.badpencil.notification.subject.PasswordSubject;
 import com.slut.badpencil.password.edit.original.p.PassEditPresenter;
 import com.slut.badpencil.password.edit.original.p.PassEditPresenterImpl;
 import com.slut.badpencil.password.label.v.LabelActivity;
+import com.slut.badpencil.rsa.RSAUtils;
 import com.slut.badpencil.utils.ResUtils;
 import com.slut.badpencil.utils.SPUtils;
 import com.slut.badpencil.utils.ToastUtils;
@@ -64,6 +66,7 @@ public class PassEditActivity extends AppCompatActivity implements PassEditView 
     FlowLayout flowLayout;
 
     private Password primaryPassword = null;
+    private String primaryUUID = null;
     private ArrayList<PassLabel> primaryArrayLabelList = null;
     private ArrayList<PassLabel> extraArrayLabelList = null;
     private PassEditPresenter presenter;
@@ -91,8 +94,8 @@ public class PassEditActivity extends AppCompatActivity implements PassEditView 
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.hasExtra(EXTRA_PASSWORD)) {
-                primaryPassword = intent.getParcelableExtra(EXTRA_PASSWORD);
-                presenter.queryLabels(primaryPassword);
+                primaryUUID = intent.getStringExtra(EXTRA_PASSWORD);
+                presenter.queryLabels(primaryUUID);
             }
         }
     }
@@ -201,13 +204,13 @@ public class PassEditActivity extends AppCompatActivity implements PassEditView 
         presenter.create(t, a, p, r, extraArrayLabelList);
     }
 
-    private void update(){
+    private void update() {
         String t = title.getText().toString().trim();
         String a = account.getText().toString().trim();
         String p = password.getText().toString().trim();
         String r = remark.getText().toString().trim();
 
-        presenter.update(primaryPassword,t,a,p,r,extraArrayLabelList);
+        presenter.update(primaryPassword, t, a, p, r, extraArrayLabelList);
     }
 
     private void checkUI() {
@@ -261,7 +264,7 @@ public class PassEditActivity extends AppCompatActivity implements PassEditView 
             checkBox.setText(R.string.cb_never_show_again);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setIcon(R.drawable.ic_warning_amber_24dp);
-            builder.setTitle(R.string.title_dialog_pass_edit_empty);
+            builder.setTitle(R.string.title_dialog_tips);
             builder.setView(childView);
             builder.setPositiveButton(R.string.action_dialog_giveup_edit, new DialogInterface.OnClickListener() {
                 @Override
@@ -287,6 +290,7 @@ public class PassEditActivity extends AppCompatActivity implements PassEditView 
     @Override
     public void onCreateSuccess(Password password) {
         ToastUtils.showShort(R.string.success_pass_create);
+        PasswordSubject.getInstances().notifyItemInserted(password.getUuid());
         Intent intent = getIntent();
         if (intent != null) {
             setResult(RESULT_OK, intent);
@@ -315,16 +319,22 @@ public class PassEditActivity extends AppCompatActivity implements PassEditView 
     }
 
     @Override
-    public void onQuerySuccess(List<PassLabel> passLabelList) {
+    public void onQuerySuccess(Password password, List<PassLabel> passLabelList) {
         flowLayout.removeAllViews();
         extraArrayLabelList = new ArrayList<>(passLabelList);
         primaryArrayLabelList = new ArrayList<>(passLabelList);
+        primaryPassword = password;
         for (PassLabel passLabel : extraArrayLabelList) {
             View view = LayoutInflater.from(this).inflate(R.layout.view_label, new LinearLayout(this), false);
             TextView textView = (TextView) view.findViewById(R.id.name);
             textView.setText(passLabel.getName() + "");
             flowLayout.addView(view);
         }
+
+        title.setText(password.getTitle());
+        account.setText(password.getAccount());
+        this.password.setText(RSAUtils.decrypt(password.getPassword()));
+        remark.setText(password.getRemark());
     }
 
     @Override
@@ -335,6 +345,7 @@ public class PassEditActivity extends AppCompatActivity implements PassEditView 
     @Override
     public void onUpdateSuccess(Password password) {
         ToastUtils.showShort(R.string.success_pass_update);
+        PasswordSubject.getInstances().notifyItemChanged(password.getUuid());
         Intent intent = getIntent();
         if (intent != null) {
             setResult(RESULT_OK, intent);

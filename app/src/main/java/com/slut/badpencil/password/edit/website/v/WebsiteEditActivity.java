@@ -25,6 +25,7 @@ import com.slut.badpencil.R;
 import com.slut.badpencil.config.AppConfig;
 import com.slut.badpencil.database.bean.password.PassLabel;
 import com.slut.badpencil.database.bean.password.WebsitePassword;
+import com.slut.badpencil.notification.subject.PasswordSubject;
 import com.slut.badpencil.password.edit.website.p.WebsiteEditPresenter;
 import com.slut.badpencil.password.edit.website.p.WebsiteEditPresenterImpl;
 import com.slut.badpencil.password.label.v.LabelActivity;
@@ -270,6 +271,7 @@ public class WebsiteEditActivity extends AppCompatActivity implements WebsiteEdi
             create();
         } else {
             //更新
+            update();
         }
     }
 
@@ -292,7 +294,7 @@ public class WebsiteEditActivity extends AppCompatActivity implements WebsiteEdi
             checkBox.setText(R.string.cb_never_show_again);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setIcon(R.drawable.ic_warning_amber_24dp);
-            builder.setTitle(R.string.title_dialog_pass_edit_empty);
+            builder.setTitle(R.string.title_dialog_tips);
             builder.setView(childView);
             builder.setPositiveButton(R.string.action_dialog_giveup_edit, new DialogInterface.OnClickListener() {
                 @Override
@@ -318,6 +320,7 @@ public class WebsiteEditActivity extends AppCompatActivity implements WebsiteEdi
     @Override
     public void onCreateSuccess(WebsitePassword password) {
         ToastUtils.showShort(R.string.success_pass_create);
+        PasswordSubject.getInstances().notifyItemInserted(password.getUuid());
         Intent intent = getIntent();
         if (intent != null) {
             setResult(RESULT_OK, intent);
@@ -348,6 +351,7 @@ public class WebsiteEditActivity extends AppCompatActivity implements WebsiteEdi
     @Override
     public void onUpdateSuccess(WebsitePassword websitePassword) {
         ToastUtils.showShort(R.string.success_pass_update);
+        PasswordSubject.getInstances().notifyItemChanged(websitePassword.getPassUuid());
         Intent intent = getIntent();
         if (intent != null) {
             setResult(RESULT_OK, intent);

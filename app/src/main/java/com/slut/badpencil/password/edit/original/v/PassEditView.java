@@ -29,7 +29,7 @@ public interface PassEditView {
     void onCreateError(String msg);
 
 
-    void onQuerySuccess(List<PassLabel> passLabelList);
+    void onQuerySuccess(Password password,List<PassLabel> passLabelList);
 
     void onQueryError(String msg);
 

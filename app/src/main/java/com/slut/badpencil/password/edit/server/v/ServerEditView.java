@@ -1,6 +1,7 @@
 package com.slut.badpencil.password.edit.server.v;
 
 import com.slut.badpencil.database.bean.password.PassLabel;
+import com.slut.badpencil.database.bean.password.Password;
 import com.slut.badpencil.database.bean.password.ServerPassword;
 
 import java.util.List;
@@ -11,15 +12,17 @@ import java.util.List;
 
 public interface ServerEditView {
 
-    void onQuerySuccess(List<PassLabel> passLabelList);
+    void onQuerySuccess(Password password, ServerPassword serverPassword, List<PassLabel> passLabelList);
 
     void onQueryError(String msg);
+
 
     void onUIChange();
 
     void onUINotChange();
 
     void onInputInvalid();
+
 
     void onInsertSuccess(ServerPassword serverPassword);
 

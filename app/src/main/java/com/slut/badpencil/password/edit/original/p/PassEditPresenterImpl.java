@@ -59,8 +59,8 @@ public class PassEditPresenterImpl implements PassEditPresenter, PassEditModel.O
     }
 
     @Override
-    public void queryLabels(Password password) {
-        passEditModel.queryLabels(password,this);
+    public void queryLabels(String uuid) {
+        passEditModel.queryLabels(uuid,this);
     }
 
     @Override
@@ -84,8 +84,8 @@ public class PassEditPresenterImpl implements PassEditPresenter, PassEditModel.O
     }
 
     @Override
-    public void onQuerySuccess(List<PassLabel> passLabelList) {
-        passEditView.onQuerySuccess(passLabelList);
+    public void onQuerySuccess(Password password,List<PassLabel> passLabelList) {
+        passEditView.onQuerySuccess(password,passLabelList);
     }
 
     @Override

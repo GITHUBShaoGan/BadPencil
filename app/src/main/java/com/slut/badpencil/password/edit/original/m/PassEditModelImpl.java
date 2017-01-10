@@ -139,20 +139,22 @@ public class PassEditModelImpl implements PassEditModel {
     }
 
     @Override
-    public void queryLabels(Password password, OnQueryLabelListener onQueryLabelListener) {
-        if (password == null) {
+    public void queryLabels(String uuid, OnQueryLabelListener onQueryLabelListener) {
+        if (TextUtils.isEmpty(uuid)) {
             onQueryLabelListener.onQueryError(ResUtils.getString(R.string.error_cannot_query_from_null));
             return;
         }
+        Password password = null;
         List<PassLabelBind> passLabelBindList = null;
         try {
-            passLabelBindList = PassLabelBindDao.getInstances().queryByPass(password.getUuid());
+            password = PasswordDao.getInstances().querySingle(uuid);
+            passLabelBindList = PassLabelBindDao.getInstances().queryByPass(uuid);
             List<PassLabel> passLabelList = new ArrayList<>();
             for (PassLabelBind passLabelBind : passLabelBindList) {
                 PassLabel passLabel = PassLabelDao.getInstances().queryByUUID(passLabelBind.getLabelUuid());
                 passLabelList.add(passLabel);
             }
-            onQueryLabelListener.onQuerySuccess(passLabelList);
+            onQueryLabelListener.onQuerySuccess(password,passLabelList);
         } catch (SQLException e) {
             if (e != null && !TextUtils.isEmpty(e.getLocalizedMessage())) {
                 onQueryLabelListener.onQueryError(e.getLocalizedMessage());

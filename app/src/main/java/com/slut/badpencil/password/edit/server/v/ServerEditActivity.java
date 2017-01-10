@@ -23,10 +23,13 @@ import android.widget.TextView;
 import com.slut.badpencil.R;
 import com.slut.badpencil.config.AppConfig;
 import com.slut.badpencil.database.bean.password.PassLabel;
+import com.slut.badpencil.database.bean.password.Password;
 import com.slut.badpencil.database.bean.password.ServerPassword;
+import com.slut.badpencil.notification.subject.PasswordSubject;
 import com.slut.badpencil.password.edit.server.p.ServerEditPresenter;
 import com.slut.badpencil.password.edit.server.p.ServerEditPresenterImpl;
 import com.slut.badpencil.password.label.v.LabelActivity;
+import com.slut.badpencil.rsa.RSAUtils;
 import com.slut.badpencil.utils.ResUtils;
 import com.slut.badpencil.utils.SPUtils;
 import com.slut.badpencil.utils.StringUtils;
@@ -71,13 +74,14 @@ public class ServerEditActivity extends AppCompatActivity implements ServerEditV
     @BindView(R.id.flowLayout)
     FlowLayout flowLayout;
 
+    private String primaryUUID = null;
     private ServerPassword primaryServerPassword = null;
     private ArrayList<PassLabel> primaryPassLabelList;
     private ArrayList<PassLabel> extraPassLabelList;
 
     private ServerEditPresenter presenter;
 
-    public static final String EXTRA_PASSWORD = "password";
+    public static final String EXTRA_PASSWORD = "uuid";
     private static final int REQUEST_SET_LABELS = 1034;
 
     @Override
@@ -100,8 +104,8 @@ public class ServerEditActivity extends AppCompatActivity implements ServerEditV
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.hasExtra(EXTRA_PASSWORD)) {
-                primaryServerPassword = intent.getParcelableExtra(EXTRA_PASSWORD);
-                presenter.queryLabel(primaryServerPassword);
+                primaryUUID = intent.getStringExtra(EXTRA_PASSWORD);
+                presenter.queryLabel(primaryUUID);
             }
         }
     }
@@ -329,9 +333,10 @@ public class ServerEditActivity extends AppCompatActivity implements ServerEditV
     }
 
     @Override
-    public void onQuerySuccess(List<PassLabel> passLabelList) {
+    public void onQuerySuccess(Password password, ServerPassword serverPassword, List<PassLabel> passLabelList) {
         flowLayout.removeAllViews();
         primaryPassLabelList = new ArrayList<>(passLabelList);
+        primaryServerPassword = serverPassword.appendFullPass(password);
         extraPassLabelList = new ArrayList<>(passLabelList);
         for (PassLabel passLabel : primaryPassLabelList) {
             View view = LayoutInflater.from(this).inflate(R.layout.view_label, new LinearLayout(this), false);
@@ -339,6 +344,13 @@ public class ServerEditActivity extends AppCompatActivity implements ServerEditV
             textView.setText(passLabel.getName() + "");
             flowLayout.addView(view);
         }
+
+        title.setText(password.getTitle());
+        address.setText(serverPassword.getAddress());
+        port.setText(serverPassword.getPort()+"");
+        account.setText(password.getAccount());
+        this.password.setText(RSAUtils.decrypt(password.getPassword()));
+        remark.setText(password.getRemark());
     }
 
     @Override
@@ -386,7 +398,7 @@ public class ServerEditActivity extends AppCompatActivity implements ServerEditV
             checkBox.setText(R.string.cb_never_show_again);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setIcon(R.drawable.ic_warning_amber_24dp);
-            builder.setTitle(R.string.title_dialog_pass_edit_empty);
+            builder.setTitle(R.string.title_dialog_tips);
             builder.setView(childView);
             builder.setPositiveButton(R.string.action_dialog_giveup_edit, new DialogInterface.OnClickListener() {
                 @Override
@@ -411,6 +423,7 @@ public class ServerEditActivity extends AppCompatActivity implements ServerEditV
 
     @Override
     public void onInsertSuccess(ServerPassword serverPassword) {
+        PasswordSubject.getInstances().notifyItemInserted(serverPassword.getPassUUID());
         ToastUtils.showShort(R.string.success_pass_create);
         Intent intent = getIntent();
         if(intent!=null){
@@ -451,11 +464,8 @@ public class ServerEditActivity extends AppCompatActivity implements ServerEditV
 
     @Override
     public void onUpdateSuccess(String uuid) {
+        PasswordSubject.getInstances().notifyItemChanged(uuid);
         ToastUtils.showShort(R.string.success_pass_update);
-        Intent intent = getIntent();
-        if(intent!=null){
-            setResult(RESULT_OK,intent);
-        }
         finish();
     }
 

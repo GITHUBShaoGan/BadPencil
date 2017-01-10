@@ -1,6 +1,7 @@
 package com.slut.badpencil.database.dao.password;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.slut.badpencil.App;
@@ -77,9 +78,16 @@ public class PasswordDao {
         builder.limit(pageSize);
         return builder.query();
     }
-    public Password querySingle(String uuid)throws SQLException{
-        QueryBuilder<Password,Integer> builder = dao.queryBuilder();
-        builder.where().eq(Password.Const.COLUMN_UUID,uuid);
+
+    public Password querySingle(String uuid) throws SQLException {
+        QueryBuilder<Password, Integer> builder = dao.queryBuilder();
+        builder.where().eq(Password.Const.COLUMN_UUID, uuid);
         return builder.queryForFirst();
+    }
+
+    public void deleteSingle(String uuid) throws SQLException {
+        DeleteBuilder<Password, Integer> builder = dao.deleteBuilder();
+        builder.where().eq(Password.Const.COLUMN_UUID, uuid);
+        builder.delete();
     }
 }

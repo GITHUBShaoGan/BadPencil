@@ -61,9 +61,24 @@ public class PassServerModelImpl implements PassServerModel {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            onQueryListener.onQuerySuccess(password,serverPassword,passLabelList);
+            onQueryListener.onQuerySuccess(password, serverPassword, passLabelList);
         } else {
             onQueryListener.onQueryError(ResUtils.getString(R.string.error_query_failed));
+        }
+    }
+
+    @Override
+    public void delete(String uuid, OnDeleteListener onDeleteListener) {
+        if (TextUtils.isEmpty(uuid)) {
+            onDeleteListener.onDeleteError(ResUtils.getString(R.string.error_cannot_delete_null));
+            return;
+        }
+        try {
+            PasswordDao.getInstances().deleteSingle(uuid);
+            PassLabelBindDao.getInstances().deleteByPasswordUUID(uuid);
+            onDeleteListener.onDeleteSuccess(uuid);
+        } catch (SQLException e) {
+            onDeleteListener.onDeleteError(e.getLocalizedMessage());
         }
     }
 

@@ -1,6 +1,7 @@
 package com.slut.badpencil.password.edit.server.p;
 
 import com.slut.badpencil.database.bean.password.PassLabel;
+import com.slut.badpencil.database.bean.password.Password;
 import com.slut.badpencil.database.bean.password.ServerPassword;
 import com.slut.badpencil.password.edit.server.m.ServerEditModel;
 import com.slut.badpencil.password.edit.server.m.ServerEditModelImpl;
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by shijianan on 2017/1/4.
  */
 
-public class ServerEditPresenterImpl implements ServerEditPresenter,ServerEditModel.OnQueryLabelListener,ServerEditModel.OnCheckUIListener,ServerEditModel.OnInsertListener,ServerEditModel.OnUpdateListener {
+public class ServerEditPresenterImpl implements ServerEditPresenter,ServerEditModel.OnQueryListener,ServerEditModel.OnCheckUIListener,ServerEditModel.OnInsertListener,ServerEditModel.OnUpdateListener {
 
     private ServerEditModel serverEditModel;
     private ServerEditView serverEditView;
@@ -24,8 +25,8 @@ public class ServerEditPresenterImpl implements ServerEditPresenter,ServerEditMo
     }
 
     @Override
-    public void onQuerySuccess(List<PassLabel> passLabelList) {
-        serverEditView.onQuerySuccess(passLabelList);
+    public void onQuerySuccess(Password password, ServerPassword serverPassword, List<PassLabel> passLabelList) {
+        serverEditView.onQuerySuccess(password,serverPassword,passLabelList);
     }
 
     @Override
@@ -34,8 +35,8 @@ public class ServerEditPresenterImpl implements ServerEditPresenter,ServerEditMo
     }
 
     @Override
-    public void queryLabel(ServerPassword serverPassword) {
-        serverEditModel.queryLabel(serverPassword,this);
+    public void queryLabel(String uuid) {
+        serverEditModel.query(uuid,this);
     }
 
     @Override

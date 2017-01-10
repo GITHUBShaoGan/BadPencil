@@ -42,13 +42,13 @@ public interface PassEditModel {
 
     interface OnQueryLabelListener{
 
-        void onQuerySuccess(List<PassLabel> passLabelList);
+        void onQuerySuccess(Password password,List<PassLabel> passLabelList);
 
         void onQueryError(String msg);
 
     }
 
-    void queryLabels(Password password,OnQueryLabelListener onQueryLabelListener);
+    void queryLabels(String uuid,OnQueryLabelListener onQueryLabelListener);
 
 
     interface OnUpdateListener{

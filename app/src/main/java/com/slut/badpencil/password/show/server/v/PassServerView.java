@@ -16,4 +16,8 @@ public interface PassServerView {
 
     void onQueryError(String msg);
 
+    void onDeleteSuccess(String uuid);
+
+    void onDeleteError(String uuid);
+
 }

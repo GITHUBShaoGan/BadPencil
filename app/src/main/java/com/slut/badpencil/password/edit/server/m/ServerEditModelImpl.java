@@ -27,24 +27,28 @@ import java.util.UUID;
 public class ServerEditModelImpl implements ServerEditModel {
 
     @Override
-    public void queryLabel(ServerPassword serverPassword, OnQueryLabelListener onQueryLabelListener) {
-        if (serverPassword == null) {
-            onQueryLabelListener.onQueryError(ResUtils.getString(R.string.error_cannot_query_from_null));
+    public void query(String uuid, OnQueryListener onQueryListener) {
+        if (TextUtils.isEmpty(uuid)) {
+            onQueryListener.onQueryError(ResUtils.getString(R.string.error_cannot_query_from_null));
             return;
         }
-        String passUUID = serverPassword.getUuid();
+        String passUUID = uuid;
+        Password password = null;
+        ServerPassword serverPassword = null;
         List<PassLabelBind> passLabelBindList = null;
         try {
+            password = PasswordDao.getInstances().querySingle(passUUID);
+            serverPassword = ServerPasswordDao.getInstances().querySingle(passUUID);
             passLabelBindList = PassLabelBindDao.getInstances().queryByPass(passUUID);
         } catch (SQLException e) {
             if (e != null && !TextUtils.isEmpty(e.getLocalizedMessage())) {
-                onQueryLabelListener.onQueryError(e.getLocalizedMessage());
+                onQueryListener.onQueryError(e.getLocalizedMessage());
             } else {
-                onQueryLabelListener.onQueryError(ResUtils.getString(R.string.error_unknown_exception_happened));
+                onQueryListener.onQueryError(ResUtils.getString(R.string.error_unknown_exception_happened));
             }
             return;
         }
-        if (passLabelBindList != null) {
+        if (password != null && serverPassword != null && passLabelBindList != null) {
             try {
                 List<PassLabel> passLabels = new ArrayList<>();
                 for (PassLabelBind passLabelBind : passLabelBindList) {
@@ -53,16 +57,16 @@ public class ServerEditModelImpl implements ServerEditModel {
                         passLabels.add(passLabel);
                     }
                 }
-                onQueryLabelListener.onQuerySuccess(passLabels);
+                onQueryListener.onQuerySuccess(password, serverPassword, passLabels);
             } catch (SQLException e) {
                 if (e != null && !TextUtils.isEmpty(e.getLocalizedMessage())) {
-                    onQueryLabelListener.onQueryError(e.getLocalizedMessage());
+                    onQueryListener.onQueryError(e.getLocalizedMessage());
                 } else {
-                    onQueryLabelListener.onQueryError(ResUtils.getString(R.string.error_unknown_exception_happened));
+                    onQueryListener.onQueryError(ResUtils.getString(R.string.error_unknown_exception_happened));
                 }
             }
         } else {
-            onQueryLabelListener.onQueryError(ResUtils.getString(R.string.error_unknown_exception_happened));
+            onQueryListener.onQueryError(ResUtils.getString(R.string.error_unknown_exception_happened));
         }
     }
 
@@ -102,7 +106,7 @@ public class ServerEditModelImpl implements ServerEditModel {
                     TextUtils.equals(address, primaryPassword.getAddress()) &&
                     TextUtils.equals(port, primaryPassword.getPort() + "") &&
                     TextUtils.equals(account, primaryPassword.getAccount()) &&
-                    TextUtils.equals(password, RSAUtils.encrypt(primaryPassword.getPassword())) &&
+                    TextUtils.equals(password, RSAUtils.decrypt(primaryPassword.getPassword())) &&
                     TextUtils.equals(remark, primaryPassword.getRemark())) {
                 if (extraLabels.size() == primaryLabels.size()) {
                     int sameCount = 0;
@@ -156,10 +160,10 @@ public class ServerEditModelImpl implements ServerEditModel {
         }
         String uuid = UUID.randomUUID().toString();
         long stamp = System.currentTimeMillis();
-        Password passForInsert = new Password(uuid, title, account, RSAUtils.encrypt(password), remark, Password.Type.SEVER, stamp, stamp);
+        Password passForInsert = new Password(uuid, title, account, RSAUtils.encrypt(password), remark, Password.Type.SERVER, stamp, stamp);
         try {
             PasswordDao.getInstances().createSingle(passForInsert);
-            ServerPassword serverPassword = new ServerPassword(uuid, title, account, RSAUtils.encrypt(password), remark, Password.Type.SEVER, stamp, stamp, uuid, ip, Integer.valueOf(port));
+            ServerPassword serverPassword = new ServerPassword(uuid, title, account, RSAUtils.encrypt(password), remark, Password.Type.SERVER, stamp, stamp, uuid, ip, Integer.valueOf(port));
             ServerPasswordDao.getInstances().createSingle(serverPassword);
 
             for (PassLabel passLabel : passLabelArrayList) {
@@ -210,9 +214,9 @@ public class ServerEditModelImpl implements ServerEditModel {
             ServerPasswordDao.getInstances().updateSingle(uuid, ip, port);
             PassLabelBindDao.getInstances().deleteByPasswordUUID(uuid);
 
-            for (PassLabel passLabel:passLabelArrayList){
+            for (PassLabel passLabel : passLabelArrayList) {
                 String id = UUID.randomUUID().toString();
-                PassLabelBind passLabelBind = new PassLabelBind(id,uuid,passLabel.getUuid(),System.currentTimeMillis());
+                PassLabelBind passLabelBind = new PassLabelBind(id, uuid, passLabel.getUuid(), System.currentTimeMillis());
                 PassLabelBindDao.getInstances().createSingle(passLabelBind);
             }
 

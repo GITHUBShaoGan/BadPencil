@@ -20,14 +20,9 @@ import com.slut.badpencil.database.dao.password.WebsitePassDao;
 import com.slut.badpencil.utils.ImageLoadUtils;
 import com.slut.badpencil.widget.RoundedLetterView;
 
-import org.apmem.tools.layouts.FlowLayout;
-
 import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by shijianan on 2017/1/4.
@@ -72,7 +67,7 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case Password.Type.WEBSITE:
                 viewHolder = new WebsiteViewHolder(LayoutInflater.from(App.getContext()).inflate(R.layout.item_pass_website, new LinearLayout(App.getContext()), false));
                 break;
-            case Password.Type.SEVER:
+            case Password.Type.SERVER:
                 viewHolder = new ServerViewHolder(LayoutInflater.from(App.getContext()).inflate(R.layout.item_pass_server, new LinearLayout(App.getContext()), false));
                 break;
         }
@@ -103,7 +98,7 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                         }
                         break;
-                    case Password.Type.SEVER:
+                    case Password.Type.SERVER:
                         ServerViewHolder serverViewHolder = (ServerViewHolder) holder;
                         serverViewHolder.title.setText(password.getTitle() + "");
                         serverViewHolder.account.setText(password.getAccount() + "");

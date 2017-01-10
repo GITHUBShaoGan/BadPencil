@@ -16,6 +16,7 @@ public class AppConfig {
         public static final String FILE_NAME = "APP_CONFIG";
 
         public static final String SHOW_DIALOG_PASSEDIT_EMPTY = "SHOW_DIALOG_PASSEDIT_EMPTY";
+        public static final String SHOW_DIALOG_PASS_DELETE = "SHOW_DIALOG_PASS_DELETE";
     }
 
 }

@@ -13,7 +13,7 @@ import java.util.List;
  * Created by shijianan on 2017/1/6.
  */
 
-public class PassServerPresenterImpl implements PassServerPresenter,PassServerModel.OnQueryListener {
+public class PassServerPresenterImpl implements PassServerPresenter,PassServerModel.OnQueryListener,PassServerModel.OnDeleteListener {
 
     private PassServerModel passServerModel;
     private PassServerView passServerView;
@@ -36,5 +36,20 @@ public class PassServerPresenterImpl implements PassServerPresenter,PassServerMo
     @Override
     public void query(String uuid) {
         passServerModel.query(uuid,this);
+    }
+
+    @Override
+    public void delete(String uuid) {
+        passServerModel.delete(uuid,this);
+    }
+
+    @Override
+    public void onDeleteSuccess(String uuid) {
+        passServerView.onDeleteSuccess(uuid);
+    }
+
+    @Override
+    public void onDeleteError(String uuid) {
+        passServerView.onDeleteError(uuid);
     }
 }

@@ -37,7 +37,9 @@
         <activity
             android:name=".password.label.v.LabelActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".password.show.server.v.PassServerActivity"></activity>
+        <activity android:name=".password.show.server.v.PassServerActivity" />
+        <activity android:name=".password.show.original.v.PassOriginalActivity" />
+        <activity android:name=".password.show.website.v.PassWebsiteActivity"></activity>
     </application>
 
 </manifest>
