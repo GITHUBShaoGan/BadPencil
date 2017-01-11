@@ -16,7 +16,7 @@ public class PassLabelBind {
         public static final String COLUMN_TITLE_CREATESTAMP_UUID = "createStamp";
     }
 
-    @DatabaseField(id = true)
+    @DatabaseField
     private String uuid;
     @DatabaseField
     private String passUuid;

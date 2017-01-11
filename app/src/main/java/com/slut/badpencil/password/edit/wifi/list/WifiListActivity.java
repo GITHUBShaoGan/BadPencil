@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.slut.badpencil.R;
-import com.slut.badpencil.password.edit.wifi.WifiEditActivity;
+import com.slut.badpencil.password.edit.wifi.v.WifiEditActivity;
 
 import java.util.List;
 
@@ -95,7 +95,7 @@ public class WifiListActivity extends AppCompatActivity implements WifiListAdapt
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.skip:
                 Intent intent = new Intent(this, WifiEditActivity.class);
                 startActivity(intent);
@@ -108,6 +108,16 @@ public class WifiListActivity extends AppCompatActivity implements WifiListAdapt
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(this, WifiEditActivity.class);
         intent.putExtra(WifiEditActivity.EXTRA_SCAN_RESULT, adapter.getScanResultList().get(position));
-        startActivity(intent);
+        startActivityForResult(intent, 2000);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Intent intent = getIntent();
+        if (intent != null) {
+            setResult(RESULT_OK, data);
+        }
+        finish();
     }
 }

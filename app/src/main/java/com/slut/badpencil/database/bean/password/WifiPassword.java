@@ -10,8 +10,16 @@ import com.slut.badpencil.database.bean.password.Password;
 @DatabaseTable
 public class WifiPassword extends Password {
 
+    public class Const{
+        public static final String COLUMN_PASS_UUID = "passUUID";
+        public static final String COLUMN_ROUTER_IP = "routerIP";
+        public static final String COLUMN_ROUTER_PASSWORD = "routerPassword";
+        public static final String COLUMN_OPERATOR_ACCOUNT = "operatorAccount";
+        public static final String COLUMN_OPERATOR_PASSWORD = "operatorPassword";
+    }
+
     @DatabaseField
-    private String uuid;
+    private String passUUID;
     @DatabaseField
     private String routerIP;
     @DatabaseField
@@ -24,23 +32,20 @@ public class WifiPassword extends Password {
     public WifiPassword() {
     }
 
-    public WifiPassword(String uuid, String title, String account, String password, String remark, int type, long createStamp, long updateStamp, String routerIP, String routerPassword, String operatorAccount, String operatorPassword) {
-        super(uuid, title, account, password, remark, type, createStamp, updateStamp);
+    public WifiPassword(String passUUID, String routerIP, String routerPassword, String operatorAccount, String operatorPassword) {
+        this.passUUID = passUUID;
         this.routerIP = routerIP;
         this.routerPassword = routerPassword;
         this.operatorAccount = operatorAccount;
         this.operatorPassword = operatorPassword;
-        this.uuid = uuid;
     }
 
-    @Override
-    public String getUuid() {
-        return uuid;
+    public String getPassUUID() {
+        return passUUID;
     }
 
-    @Override
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setPassUUID(String passUUID) {
+        this.passUUID = passUUID;
     }
 
     public String getRouterIP() {
@@ -73,5 +78,19 @@ public class WifiPassword extends Password {
 
     public void setOperatorPassword(String operatorPassword) {
         this.operatorPassword = operatorPassword;
+    }
+
+    public WifiPassword appendFullPass(Password password){
+        if(password!=null) {
+            this.setUuid(password.getUuid());
+            this.setUpdateStamp(password.getUpdateStamp());
+            this.setCreateStamp(password.getCreateStamp());
+            this.setRemark(password.getRemark());
+            this.setAccount(password.getAccount());
+            this.setPassword(password.getPassword());
+            this.setTitle(password.getTitle());
+            this.setType(Type.SERVER);
+        }
+        return this;
     }
 }

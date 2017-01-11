@@ -32,14 +32,15 @@
         <activity android:name=".password.edit.mode.EditModeActivity" />
         <activity android:name=".password.edit.website.v.WebsiteEditActivity" />
         <activity android:name=".password.edit.server.v.ServerEditActivity" />
-        <activity android:name=".password.edit.wifi.WifiEditActivity" />
+        <activity android:name=".password.edit.wifi.v.WifiEditActivity" />
         <activity android:name=".password.edit.wifi.list.WifiListActivity" />
         <activity
             android:name=".password.label.v.LabelActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".password.show.server.v.PassServerActivity" />
         <activity android:name=".password.show.original.v.PassOriginalActivity" />
-        <activity android:name=".password.show.website.v.PassWebsiteActivity"></activity>
+        <activity android:name=".password.show.website.v.PassWebsiteActivity" />
+        <activity android:name=".password.show.wifi.v.PassWifiActivity"></activity>
     </application>
 
 </manifest>

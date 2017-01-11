@@ -9,11 +9,11 @@
     <!-- Activity Title -->
     <string name="title_activity_pattern_init">设置图案密码</string>
     <string name="title_activity_password_edit_mode">选择编辑模式</string>
-    <string name="title_activity_website_edit">添加网站</string>
-    <string name="title_activity_server_edit">添加服务器</string>
-    <string name="title_activity_wifi_edit">添加Wifi</string>
+    <string name="title_activity_website_edit">编辑网站</string>
+    <string name="title_activity_server_edit">编辑服务器</string>
+    <string name="title_activity_wifi_edit">编辑Wifi</string>
     <string name="title_activity_wifi_list">Wifi列表</string>
-    <string name="title_activity_pass_edit">添加密码</string>
+    <string name="title_activity_pass_edit">编辑密码</string>
     <string name="title_activity_pass_label">标签</string>
 
     <!-- TextView -->

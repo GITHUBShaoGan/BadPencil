@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
-            tools:context="com.slut.badpencil.password.edit.wifi.WifiEditActivity">
+            tools:context="com.slut.badpencil.password.edit.wifi.v.WifiEditActivity">
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_title"
@@ -171,6 +171,14 @@
                     android:hint="@string/hint_pass_edit_remark" />
 
             </android.support.design.widget.TextInputLayout>
+
+            <org.apmem.tools.layouts.FlowLayout
+                android:id="@+id/flowLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                app:layoutDirection="rtl"></org.apmem.tools.layouts.FlowLayout>
+
         </LinearLayout>
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

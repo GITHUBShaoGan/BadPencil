@@ -14,6 +14,7 @@ import com.slut.badpencil.database.bean.password.PassLabel;
 import com.slut.badpencil.database.bean.password.Password;
 import com.slut.badpencil.database.bean.password.ServerPassword;
 import com.slut.badpencil.database.bean.password.WebsitePassword;
+import com.slut.badpencil.database.bean.password.WifiPassword;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -52,6 +53,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, PassLabelBind.class);
             TableUtils.createTableIfNotExists(connectionSource, WebsitePassword.class);
             TableUtils.createTableIfNotExists(connectionSource, ServerPassword.class);
+            TableUtils.createTableIfNotExists(connectionSource, WifiPassword.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }

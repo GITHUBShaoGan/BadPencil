@@ -21,6 +21,7 @@ import com.slut.badpencil.database.dao.password.PassLabelDao;
 import com.slut.badpencil.database.dao.password.PasswordDao;
 import com.slut.badpencil.database.dao.password.ServerPasswordDao;
 import com.slut.badpencil.database.dao.password.WebsitePassDao;
+import com.slut.badpencil.database.dao.password.WifiPasswordDao;
 import com.slut.badpencil.utils.FileUtils;
 
 /**
@@ -105,6 +106,7 @@ public class App extends Application {
         PassLabelBindDao.getInstances().initDao();
         WebsitePassDao.getInstances().initDao();
         ServerPasswordDao.getInstances().initDao();
+        WifiPasswordDao.getInstances().initDao();
     }
 
     public static boolean isLocked() {

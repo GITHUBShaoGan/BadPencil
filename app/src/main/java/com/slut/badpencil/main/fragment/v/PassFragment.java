@@ -24,6 +24,7 @@ import com.slut.badpencil.notification.subject.PasswordSubject;
 import com.slut.badpencil.password.show.original.v.PassOriginalActivity;
 import com.slut.badpencil.password.show.server.v.PassServerActivity;
 import com.slut.badpencil.password.show.website.v.PassWebsiteActivity;
+import com.slut.badpencil.password.show.wifi.v.PassWifiActivity;
 import com.slut.badpencil.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -202,6 +203,11 @@ public class PassFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     Intent intent2Web = new Intent(getActivity(), PassWebsiteActivity.class);
                     intent2Web.putExtra(PassWebsiteActivity.EXTRA_UUID, password.getUuid());
                     startActivity(intent2Web);
+                    break;
+                case Password.Type.WIFI:
+                    Intent intent2Wifi = new Intent(getActivity(), PassWifiActivity.class);
+                    intent2Wifi.putExtra(PassWifiActivity.EXTRA_UUID, password.getUuid());
+                    startActivity(intent2Wifi);
                     break;
             }
         }

@@ -24,6 +24,8 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by shijianan on 2017/1/4.
  */
@@ -70,6 +72,9 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case Password.Type.SERVER:
                 viewHolder = new ServerViewHolder(LayoutInflater.from(App.getContext()).inflate(R.layout.item_pass_server, new LinearLayout(App.getContext()), false));
                 break;
+            case Password.Type.WIFI:
+                viewHolder = new WifiViewHolder(LayoutInflater.from(App.getContext()).inflate(R.layout.item_pass_wifi, new LinearLayout(App.getContext()), false));
+                break;
         }
         return viewHolder;
     }
@@ -109,6 +114,11 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         } catch (SQLException e) {
 
                         }
+                        break;
+                    case Password.Type.WIFI:
+                        WifiViewHolder wifiViewHolder = (WifiViewHolder) holder;
+                        wifiViewHolder.title.setText(password.getTitle());
+                        wifiViewHolder.name.setText(password.getAccount());
                         break;
                 }
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -180,6 +190,18 @@ public class PassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ip = (TextView) itemView.findViewById(R.id.ip);
             port = (TextView) itemView.findViewById(R.id.port);
             account = (TextView) itemView.findViewById(R.id.account);
+        }
+    }
+
+    public class WifiViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView title;
+        private TextView name;
+
+        public WifiViewHolder(View itemView) {
+            super(itemView);
+            title = (TextView) itemView.findViewById(R.id.title);
+            name = (TextView) itemView.findViewById(R.id.name);
         }
     }
 

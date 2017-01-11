@@ -15,7 +15,7 @@ public class WebsitePassword extends Password {
         public static final String COLUMN_URL = "url";
     }
 
-    @DatabaseField(id = true)
+    @DatabaseField
     private String passUuid;
     @DatabaseField
     private String url;
